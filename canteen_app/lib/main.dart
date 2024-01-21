@@ -1,7 +1,7 @@
-// main.dart
 
-import 'package:canteen_app/screens/login_screen.dart';
+import 'package:canteen_app/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
+import 'color_schemes.g.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,10 +14,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Canteen Management App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+      darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       home: LoginPage(),
-    );
+      debugShowCheckedModeBanner: false, 
+
+        );
   }
+
 }

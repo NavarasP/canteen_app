@@ -2,7 +2,7 @@ import 'package:canteen_app/models/canteen_item.dart';
 
 class CanteenService {
   // Placeholder list to store canteen items (Replace this with your data storage solution)
-  List<CanteenItem> _canteenItems = [];
+  final List<CanteenItem> _canteenItems = [];
 
   // Method to add a new item to the canteen
   void addItem({required String name, required double price, required int quantity}) {

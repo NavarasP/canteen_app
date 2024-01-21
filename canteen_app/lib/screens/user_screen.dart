@@ -1,49 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:canteen_app/widgets/item_tile.dart';
 
-class UserScreen extends StatelessWidget {
+class UserScreen extends StatefulWidget {
+  @override
+  _UserScreenState createState() => _UserScreenState();
+}
+
+class _UserScreenState extends State<UserScreen> {
+  int _currentIndex = 0; // Index for the selected tab
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Screen'),
+        // title: Text('User Screen'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Welcome to the User Screen'),
-            SizedBox(height: 20),
+            const Text('Todays Special'),
+            const SizedBox(height: 20),
             ItemList(),
           ],
         ),
       ),
-    );
-  }
-}
-
-class ItemList extends StatelessWidget {
-  final List<Map<String, dynamic>> dummyData = [
-    {'itemName': 'Burger', 'itemPrice': 5.99},
-    {'itemName': 'Pizza', 'itemPrice': 8.99},
-    {'itemName': 'Salad', 'itemPrice': 4.99},
-    // Add more dummy data as needed
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: dummyData.length,
-      itemBuilder: (context, index) {
-        var item = dummyData[index];
-        return ListTile(
-          title: Text(item['itemName']),
-          subtitle: Text('Price: \$${item['itemPrice']}'),
-          // Add more details if needed
-        );
-      },
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+            // Handle navigation based on the selected tab
+            // You can use a switch statement or if-else conditions here
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Cart',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+      ),
     );
   }
 }
