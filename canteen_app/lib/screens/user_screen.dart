@@ -48,11 +48,11 @@ class _UserScreenState extends State<UserScreen> {
  AppBar  _buildAppBar() {
     switch (_currentIndex) {
       case 0:
-        return AppBar(title: Text('Home'));
+        return AppBar(title: const Text('Home'));
       case 1:
-        return AppBar(title: Text('Cart'));
+        return AppBar(title: const Text('Cart'));
       case 2:
-        return AppBar(title: Text('Profile'));
+        return AppBar(title: const Text('Profile'));
       default:
         return AppBar(); // Default app bar for other cases
     }
