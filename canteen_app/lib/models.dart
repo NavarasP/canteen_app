@@ -28,6 +28,17 @@ class CanteenItem {
   });
 }
 
+class CartItem {
+  final String itemName;
+  final double itemPrice;
+  int itemCount;
+
+  CartItem({
+    required this.itemName,
+    required this.itemPrice,
+    this.itemCount = 1,
+  });
+}
 
 class Order {
   final String orderId;
@@ -86,3 +97,11 @@ final Order order2 = Order(
   orderDate: DateTime.now(),
   totalAmount: 13.98, 
 );
+
+
+
+
+  List<CartItem> cartItems = [
+    CartItem(itemName: 'Item 1', itemPrice: 10.0),
+    CartItem(itemName: 'Item 2', itemPrice: 15.0),
+  ];
