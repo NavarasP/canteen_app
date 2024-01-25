@@ -14,9 +14,6 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -24,8 +21,8 @@ class ProfilePage extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 50,
+              backgroundColor: Colors.blue,
               // Add your user's profile picture here
-              backgroundColor: Colors.blue, // Placeholder color
               // backgroundImage: NetworkImage('URL_TO_USER_PROFILE_PICTURE'),
             ),
             SizedBox(height: 20),

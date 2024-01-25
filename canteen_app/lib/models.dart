@@ -17,15 +17,8 @@ class CanteenItem {
   final bool isVeg; 
 
   CanteenItem({
-    required this.id,
-    required this.name,
-    required this.price,
-    required this.quantity,
-    required this.isApproved,
-    required this.approvedBy,
-    required this.isTodaysSpecial,
-    required this.isVeg, 
-  });
+    required this.id,required this.name,required this.price,required this.quantity,required this.isApproved,
+    required this.approvedBy,required this.isTodaysSpecial,required this.isVeg,});
 }
 
 class CartItem {

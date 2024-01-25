@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:canteen_app/color_schemes.g.dart';
-import 'package:canteen_app/widgets/item_tile.dart';
+import 'package:canteen_app/widgets/pages/item_list.dart';
 import 'package:canteen_app/models.dart';
+import 'package:canteen_app/widgets/pages/order_cart.dart';
+import 'package:canteen_app/widgets/pages/profile.dart';
 
 class UserScreen extends StatefulWidget {
   @override
@@ -14,9 +16,7 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // title: Text('User Screen'),
-      ),
+      appBar: _buildAppBar(), // Use a method to build the app bar
       body: _buildBody(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -34,7 +34,7 @@ class _UserScreenState extends State<UserScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
-            label: 'Orders',
+            label: 'Cart',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -45,54 +45,35 @@ class _UserScreenState extends State<UserScreen> {
     );
   }
 
-  Widget _buildBody() {
+ AppBar  _buildAppBar() {
     switch (_currentIndex) {
       case 0:
-        return _buildHomeScreen();
+        return AppBar(title: Text('Home'));
       case 1:
-        return CartPage(); // Display the cart page
+        return AppBar(title: Text('Cart'));
       case 2:
-        return ProfilePage(); // Display the profile page
+        return AppBar(title: Text('Profile'));
       default:
-        return Container(); // Handle other cases as needed
+        return AppBar(); // Default app bar for other cases
     }
   }
 
-  Widget _buildHomeScreen() {
-    return ListView(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text('Today\'s Special'),
-              const SizedBox(height: 20),
-              ItemList(canteenItems: canteenItems),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class CartPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // Implement your cart page UI here
-    return Center(
-      child: Text('Cart Page'),
-    );
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // Implement your profile page UI here
-    return Center(
-      child: Text('Profile Page'),
-    );
+  Widget _buildBody() {
+    switch (_currentIndex) {
+      case 0:
+        return ItemScreen();
+      case 1:
+        return CartPage();
+      case 2:
+        return ProfilePage(
+          userName: currentUser.displayName,
+          userDetails: 'Add your user details here', // Modify with actual user details
+          onLogout: () {
+            print('Logout button pressed');
+          },
+        );
+      default:
+        return Container();
+    }
   }
 }

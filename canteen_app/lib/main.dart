@@ -1,11 +1,9 @@
-
-import 'package:canteen_app/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
-import 'color_schemes.g.dart';
+import 'package:canteen_app/screens/auth_screen.dart';
+import 'package:canteen_app/color_schemes.g.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   runApp(MyApp());
 }
 
@@ -17,9 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       // darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       home: LoginPage(),
-      debugShowCheckedModeBanner: false, 
-
-        );
+      debugShowCheckedModeBanner: false,
+    );
   }
-
 }

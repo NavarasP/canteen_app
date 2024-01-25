@@ -9,16 +9,13 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-
+ 
 
   @override
   Widget build(BuildContext context) {
     double totalAmount = cartItems.fold(0, (sum, item) => sum + item.itemPrice * item.itemCount);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Shopping Cart'),
-      ),
       body: ListView.builder(
         itemCount: cartItems.length,
         itemBuilder: (context, index) {
