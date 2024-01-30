@@ -1,45 +1,73 @@
+import 'package:canteen_app/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:canteen_app/services/authentication_service.dart';
 
 class ProfilePage extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 50,
-              backgroundColor: Colors.blue,
-              // Add your user's profile picture here
-              // backgroundImage: NetworkImage('URL_TO_USER_PROFILE_PICTURE'),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Hello, userName!',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'userDetails',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () async {
-                // Call the logout function
-                await AuthenticationService().signOut();
+        child: FutureBuilder<Map<String, String?>>(
+          // Use FutureBuilder to asynchronously retrieve the user details
+          future: AuthenticationService.getUserDetails(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // If still loading, display a loading indicator
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              // If an error occurred, display an error message
+              return Text('Error loading user details: ${snapshot.error}');
+            } else {
+              // If successful, retrieve the user details
+              final user = snapshot.data;
 
-                // Navigate to the login screen
-                Navigator.of(context).pushReplacementNamed('/login');
-              },
-              child: Text('Logout'),
-            ),
-          ],
+              // Extract user details
+              final String? username = user?['username'];
+              final String? name = user?['name'];
+              final String? userType = user?['userType'];
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.blue,
+                    // Add your user's profile picture here
+                    // backgroundImage: NetworkImage('URL_TO_USER_PROFILE_PICTURE'),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Hello, ${username ?? 'User'}!', // Display the username
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10),
+                  // Display other user details
+                  Text(
+                    'Name: ${name ?? 'N/A'}',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  Text(
+                    'User Type: ${userType ?? 'N/A'}',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 30),
+                  ElevatedButton(
+                    onPressed: () async {
+                      // Call the logout function
+                      await AuthenticationService().signOut();
+
+                      // Navigate to the login screen
+                      Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => LoginPage()),
+                            );                    },
+                    child: Text('Logout'),
+                  ),
+                ],
+              );
+            }
+          },
         ),
       ),
     );

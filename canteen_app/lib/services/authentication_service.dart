@@ -9,10 +9,25 @@ class AuthenticationService {
   static const String authTokenKey = 'authToken';
 
   // Save the auth token to SharedPreferences
-  static Future<void> saveAuthToken(String authToken) async {
+  Future<void> saveUserDetails(String authToken, String username, String name, String userType) async {
+    // Use SharedPreferences to save user details locally
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(authTokenKey, authToken);
+    prefs.setString('authToken', authToken);
+    prefs.setString('username', username);
+    prefs.setString('name', name);
+    prefs.setString('userType', userType);
   }
+
+    static Future<Map<String, String?>> getUserDetails() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return {
+      'authToken': prefs.getString('authToken'),
+      'username': prefs.getString('username'),
+      'name': prefs.getString('name'),
+      'userType': prefs.getString('userType'),
+    };
+  }
+  
 
   // Retrieve the auth token from SharedPreferences
   static Future<String?> getAuthToken() async {
@@ -20,11 +35,15 @@ class AuthenticationService {
     return prefs.getString(authTokenKey);
   }
 
+
   // Method to check if the user is authenticated
   Future<bool> isAuthenticated() async {
     final String? authToken = await getAuthToken();
     return authToken != null;
   }
+
+
+
 
   Future<void> signIn(String email, String password) async {
     try {
@@ -39,9 +58,12 @@ class AuthenticationService {
 
         // Extract the auth token from the response
         final String authToken = responseData['data']['auth_token'];
+        final String username = responseData['data']['username'];
+        final String name = responseData['data']['name'];
+        final String userType = responseData['data']['type'];
 
         // Save the auth token
-        await saveAuthToken(authToken);
+        await saveUserDetails(authToken, username, name, userType);
 
         print('Signed in successfully!');
       } else {
@@ -55,26 +77,35 @@ class AuthenticationService {
     }
   }
 
-  Future<void> signOut() async {
-    try {
-      // Clear the auth token from SharedPreferences
-      await saveAuthToken('');
+Future<void> signOut() async {
+  try {
+    // Retrieve the auth token from SharedPreferences
+    final String? authToken = await getAuthToken();
 
-      final response = await http.post(
-        Uri.parse('$baseUrl/api/mobile/logout/'),
-        // Additional headers or data if needed
-      );
+    // Clear the auth token from SharedPreferences
+     // Passing empty strings for user details
 
-      if (response.statusCode == 200) {
-        print('Signed out successfully!');
-      } else {
-        print('Error signing out: ${response.statusCode}');
-        // Handle sign-out errors here
-      }
-    } catch (e) {
-      print('Error signing out: $e');
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/mobile/logout/'),
+      headers: {
+        'Authorization': 'Token $authToken', // Include the auth token in the headers
+      },
+      // Additional headers or data if needed
+    );
+
+    if (response.statusCode == 200) {
+      await saveUserDetails('', '', '', '');
+      print('Signed out successfully!');
+    } else {
+      print('Error signing out: ${response.statusCode}');
       // Handle sign-out errors here
-      throw e; // Rethrow the exception for the caller to handle
     }
+  } catch (e) {
+    print('Error signing out: $e');
+    // Handle sign-out errors here
+    throw e; // Rethrow the exception for the caller to handle
   }
+}
+
+
 }
