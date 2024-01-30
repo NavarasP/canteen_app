@@ -11,12 +11,11 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreenState extends State<UserScreen> {
-  int _currentIndex = 0; // Index for the selected tab
-
+  int _currentIndex = 0; 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(), // Use a method to build the app bar
+      appBar: _buildAppBar(),
       body: _buildBody(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -54,7 +53,7 @@ class _UserScreenState extends State<UserScreen> {
       case 2:
         return AppBar(title: const Text('Profile'));
       default:
-        return AppBar(); // Default app bar for other cases
+        return AppBar();
     }
   }
 
@@ -65,13 +64,7 @@ class _UserScreenState extends State<UserScreen> {
       case 1:
         return CartPage();
       case 2:
-        return ProfilePage(
-          userName: currentUser.displayName,
-          userDetails: 'Add your user details here', // Modify with actual user details
-          onLogout: () {
-            print('Logout button pressed');
-          },
-        );
+        return ProfilePage();
       default:
         return Container();
     }

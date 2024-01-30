@@ -4,9 +4,48 @@ import 'package:canteen_app/services/authentication_service.dart';
 import 'package:canteen_app/screens/user_screen.dart';
 import 'package:canteen_app/widgets/common_widgets.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
+  @override
+  _LoginFormState createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  Future<void> _login(BuildContext context) async {
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    try {
+      // Show loading indicator
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const AlertDialog(
+            content: CircularProgressIndicator(),
+          );
+        },
+        barrierDismissible: false,
+      );
+
+      // Call the authentication service to sign in
+      await AuthenticationService().signIn(email, password);
+
+      // Navigate to the user screen on successful login
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => UserScreen()),
+      );
+    } catch (error) {
+      // Handle authentication errors
+      // You may want to display an error message to the user
+      print('Authentication failed: $error');
+
+      // Close the loading indicator
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,22 +63,14 @@ class LoginForm extends StatelessWidget {
         ),
         const SizedBox(height: 24.0),
         CommonButton(
-          onPressed: () {
-            // Add authentication logic here
-            String email = emailController.text;
-            String password = passwordController.text;
-            AuthenticationService().signIn(email, password);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => UserScreen()),
-            );
-          },
+          onPressed: () => _login(context),
           text: 'Login',
         ),
       ],
     );
   }
 }
+
 
 
 

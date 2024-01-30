@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:canteen_app/services/authentication_service.dart';
 
 class ProfilePage extends StatelessWidget {
-  final String userName;
-  final String userDetails;
-  final Function() onLogout;
 
-  ProfilePage({
-    required this.userName,
-    required this.userDetails,
-    required this.onLogout,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +20,23 @@ class ProfilePage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              'Hello, $userName!',
+              'Hello, userName!',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
             Text(
-              userDetails,
+              'userDetails',
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 30),
             ElevatedButton(
-              onPressed: onLogout,
+              onPressed: () async {
+                // Call the logout function
+                await AuthenticationService().signOut();
+
+                // Navigate to the login screen
+                Navigator.of(context).pushReplacementNamed('/login');
+              },
               child: Text('Logout'),
             ),
           ],

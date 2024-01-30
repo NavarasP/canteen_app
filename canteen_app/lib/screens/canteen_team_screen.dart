@@ -57,13 +57,7 @@ class _CanteenTeamScreenState extends State<CanteenTeamScreen> {
       case 0:
         return ItemScreen();
       case 1:
-        return ProfilePage(
-          userName: currentUser.displayName,
-          userDetails: 'Add your user details here', // Modify with actual user details
-          onLogout: () {
-            print('Logout button pressed');
-          },
-        );
+        return ProfilePage();
       default:
         return Container();
     }

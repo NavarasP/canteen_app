@@ -9,7 +9,9 @@ SECRET_KEY = 'SECRET_KEY'
 DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
-
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:53475",  # Your frontend origin
+]
 DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -28,7 +30,7 @@ LOCAL_APPS = [
     "student.apps.StudentConfig",
 ]
 
-INSTALLED_APPS = DJANGO_APPS  + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS  + LOCAL_APPS + ['corsheaders']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -38,6 +40,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 AUTH_USER_MODEL = "accounts.User"
