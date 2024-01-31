@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/services/models.dart';
-import 'package:canteen_app/services/api_service.dart';
+import 'package:canteen_app/Models/manager_model.dart';
+import 'package:canteen_app/services/api/canteen_service__manager.dart';
+
 
 
 class ItemScreen_Manager extends StatefulWidget {
@@ -9,7 +10,7 @@ class ItemScreen_Manager extends StatefulWidget {
 }
 
 class _ItemScreenState extends State<ItemScreen_Manager> {
-  List<CanteenItem> items = [];
+  List<CanteenItem_Manager> items = [];
 
   @override
   void initState() {
@@ -19,7 +20,7 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
 
   Future<void> _loadItems() async {
     try {
-      List<CanteenItem> loadedItems = await CanteenService().getFoodList();
+      List<CanteenItem_Manager> loadedItems = await CanteenService_Manager().getFoodList_Manager();
       setState(() {
         items = loadedItems;
       });
@@ -31,7 +32,7 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
 
   Future<void> _createNewItem(Map<String, dynamic> foodData) async {
     try {
-      await CanteenService().createFood(foodData);
+      await CanteenService_Manager().createFood(foodData);
       // Refresh the item list after creating a new item
       _loadItems();
     } catch (e) {
@@ -113,7 +114,7 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
     return ListView.builder(
       itemCount: items.length,
       itemBuilder: (context, index) {
-        CanteenItem item = items[index];
+        CanteenItem_Manager item = items[index];
         return ListTile(
           title: Text(item.name),
           subtitle: Column(
@@ -132,7 +133,7 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
     );
   }
 
-  void _showEditItemPopup(BuildContext context, CanteenItem item) {
+  void _showEditItemPopup(BuildContext context, CanteenItem_Manager item) {
     TextEditingController nameController =
         TextEditingController(text: item.name);
     TextEditingController priceController =
@@ -189,7 +190,7 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
 
   Future<void> _updateItem(int itemId, Map<String, dynamic> foodData) async {
     try {
-      await CanteenService().updateFood(itemId, foodData);
+      await CanteenService_Manager().updateFood(itemId, foodData);
       // Refresh the item list after updating the item
       _loadItems();
     } catch (e) {

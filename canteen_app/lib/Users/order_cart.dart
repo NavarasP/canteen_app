@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/services/models.dart';
+import 'package:canteen_app/Models/users_models.dart';
 import 'package:canteen_app/services/local_service.dart';
 
 class CartPage extends StatefulWidget {
@@ -24,7 +24,7 @@ class _CartPageState extends State<CartPage> {
     });
   }
 
-void updateQuantity(CartItem cartItem, int change) {
+  void updateQuantity(CartItem cartItem, int change) {
     setState(() {
       cartItem.quantity = (cartItem.quantity + change).clamp(0, 99);
       if (cartItem.quantity == 0) {
@@ -33,6 +33,62 @@ void updateQuantity(CartItem cartItem, int change) {
       }
       CartService.updateCartItems(cartItems);
     });
+  }
+
+  Future<void> checkout() async {
+    // Implement your checkout logic here
+    // Call the order API with cartItems
+    try {
+      // Placeholder API call
+      // Replace this with your actual order API call
+      // await OrderService.placeOrder(cartItems);
+
+      // Clear the cart after a successful order
+      await CartService.clearCart();
+      setState(() {
+        cartItems.clear();
+      });
+
+      // Show a confirmation dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Order Placed'),
+            content: Text('Your order has been placed successfully.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      // Handle errors
+      print('Error placing order: $e');
+      // Show an error dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Failed to place the order. Please try again.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -91,8 +147,7 @@ void updateQuantity(CartItem cartItem, int change) {
             Text('Total: \$${totalAmount.toStringAsFixed(2)}'),
             ElevatedButton(
               onPressed: () {
-                // Implement your checkout logic here
-                print('Checkout button pressed');
+                checkout(); // Call the checkout function
               },
               child: const Text('Checkout'),
             ),

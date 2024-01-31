@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:canteen_app/services/models.dart';
+import 'package:canteen_app/Models/users_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartService {
@@ -61,6 +61,18 @@ static Future<void> saveCartItems(List<CartItem> cartItems) async {
       prefs.setString(cartItemsKey, cartItemsJson);
     } catch (e) {
       print('Error saving cart items: $e');
+    }
+  }
+
+
+  static Future<void> clearCart() async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      // Clear the cart items from shared preferences
+      prefs.remove(cartItemsKey);
+    } catch (e) {
+      print('Error clearing cart: $e');
     }
   }
 

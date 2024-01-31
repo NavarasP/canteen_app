@@ -108,4 +108,38 @@ Future<void> signOut() async {
 }
 
 
+Future<void> signUp(String mobile, String name, String password, String confirmPwd, String department) async {
+  try {
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/mobile/student/register/'),
+      body: {
+        'mobile': mobile,
+        'name': name,
+        'password': password,
+        'confirm_password': confirmPwd,
+        'department': department,
+      },
+    );
+
+    if (response.statusCode == 201) {
+      // Parse the response JSON
+      final Map<String, dynamic> responseData = json.decode(response.body);
+
+      // Extract any additional information you may need from the response
+
+      print('Signed up successfully!');
+    } else {
+      print('Error signing up: ${response.statusCode}');
+      // Handle signup errors here
+      // You might want to throw an exception or return an error message
+    }
+  } catch (e) {
+    print('Error signing up: $e');
+    // Handle signup errors here
+    throw e; // Rethrow the exception for the caller to handle
+  }
+}
+
+
+
 }

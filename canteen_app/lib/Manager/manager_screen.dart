@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/widgets/pages/profile.dart';
+import 'package:canteen_app/widgets/profile.dart';
 import 'package:canteen_app/Manager/itemlist_manager.dart';
 import 'package:canteen_app/services/color_schemes.g.dart';
 

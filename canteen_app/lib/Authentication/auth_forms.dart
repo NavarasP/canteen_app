@@ -4,7 +4,7 @@ import 'package:canteen_app/widgets/common_widgets.dart';
 import 'package:canteen_app/Manager/manager_screen.dart';
 import 'package:canteen_app/Inspectors/inspector_screen.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:canteen_app/services/authentication_service.dart';
+import 'package:canteen_app/services/api/authentication_service.dart';
 
 class LoginForm extends StatefulWidget {
   @override

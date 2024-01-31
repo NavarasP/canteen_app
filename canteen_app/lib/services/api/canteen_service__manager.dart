@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:canteen_app/services/models.dart';
-import 'package:canteen_app/services/authentication_service.dart';
+import 'package:canteen_app/Models/manager_model.dart';
+import 'package:canteen_app/services/api/authentication_service.dart';
 
-
-class CanteenService {
+class CanteenService_Manager {
   final String baseUrl = 'http://127.0.0.1:8000';
 
-  Future<List<CanteenItem>> getFoodList() async {
+  Future<List<CanteenItem_Manager>> getFoodList_Manager() async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
@@ -22,7 +21,9 @@ class CanteenService {
         final Map<String, dynamic> responseData = json.decode(response.body);
         final List<dynamic> itemsData = responseData['data'];
 
-        return itemsData.map((data) => CanteenItem.fromJson(data)).toList();
+        return itemsData
+            .map((data) => CanteenItem_Manager.fromJson(data))
+            .toList();
       } else {
         print('Error fetching food items: ${response.statusCode}');
         throw Exception('Failed to fetch food items');
@@ -33,35 +34,7 @@ class CanteenService {
     }
   }
 
-  
-
-  Future<List<FoodCategory>> getFoodCategories() async {
-    try {
-      final String? authToken = await AuthenticationService.getAuthToken();
-
-      final response = await http.get(
-        Uri.parse('$baseUrl/api/mobile/canteen/food/category/dropdown/'),
-        headers: {
-          'Authorization': 'Token $authToken',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        final List<dynamic> categoriesData = responseData['data'];
-
-        return categoriesData.map((data) => FoodCategory.fromJson(data)).toList();
-      } else {
-        print('Error fetching food categories: ${response.statusCode}');
-        throw Exception('Failed to fetch food categories');
-      }
-    } catch (e) {
-      print('Error fetching food categories: $e');
-      throw e;
-    }
-  }
-
-  Future<void> createFood(Map<String, dynamic> foodData) async {
+    Future<void> createFood(Map<String, dynamic> foodData) async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
@@ -85,33 +58,8 @@ class CanteenService {
     }
   }
 
-  Future<FoodItemDetails> getFoodDetails(int foodId) async {
-    try {
-      final String? authToken = await AuthenticationService.getAuthToken();
 
-      final response = await http.get(
-        Uri.parse('$baseUrl/api/mobile/canteen/food/detail/$foodId/'),
-        headers: {
-          'Authorization': 'Token $authToken',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        final Map<String, dynamic> foodDetailsData = responseData['data'];
-
-        return FoodItemDetails.fromJson(foodDetailsData);
-      } else {
-        print('Error fetching food details: ${response.statusCode}');
-        throw Exception('Failed to fetch food details');
-      }
-    } catch (e) {
-      print('Error fetching food details: $e');
-      throw e;
-    }
-  }
-
-  Future<void> updateFood(int foodId, Map<String, dynamic> foodData) async {
+    Future<void> updateFood(int foodId, Map<String, dynamic> foodData) async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
@@ -135,12 +83,13 @@ class CanteenService {
     }
   }
 
+
   Future<void> deleteFood(int foodId) async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
       final response = await http.post(
-        Uri.parse('$baseUrl/api/mobile/canteen/food/delete/$foodId/'),
+        Uri.parse('$baseUrl/api/mobile/canteen/food/delete/[food_id]/'),
         headers: {
           'Authorization': 'Token $authToken',
         },
@@ -157,7 +106,10 @@ class CanteenService {
       throw e;
     }
   }
+
+
+
+
+
+
 }
-
-
-

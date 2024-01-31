@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/services/models.dart';
-import 'package:canteen_app/services/api_service.dart';
+import 'package:canteen_app/Models/inspector_models.dart';
+import 'package:canteen_app/services/api/canteen_service__inspector.dart';
 
 
 class InspectorItemScreen extends StatefulWidget {
@@ -9,7 +9,7 @@ class InspectorItemScreen extends StatefulWidget {
 }
 
 class _InspectorItemScreenState extends State<InspectorItemScreen> {
-  List<CanteenItem> items = [];
+  List<CanteenItem_Inspector> items = [];
 
   @override
   void initState() {
@@ -19,7 +19,7 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
 
   Future<void> _loadItems() async {
     try {
-      List<CanteenItem> loadedItems = await CanteenService().getFoodList();
+      List<CanteenItem_Inspector> loadedItems = await CanteenService_Inspector().getFoodList_Inspector();
       setState(() {
         items = loadedItems;
       });
@@ -31,7 +31,7 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
 
   Future<void> _updateFoodStatus(int foodId, bool isApproved) async {
     try {
-      await CanteenService().updateFood(foodId, {'is_approved': isApproved});
+      await CanteenService_Inspector().updateFood(foodId, {'is_approved': isApproved});
       // Refresh the item list after updating the food status
       _loadItems();
     } catch (e) {
@@ -57,7 +57,7 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
     return ListView.builder(
       itemCount: items.length,
       itemBuilder: (context, index) {
-        CanteenItem item = items[index];
+        CanteenItem_Inspector item = items[index];
         return ListTile(
           title: Text(item.name),
           subtitle: Column(
@@ -77,7 +77,7 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
     );
   }
 
-  void _showApprovalPopup(BuildContext context, CanteenItem item) {
+  void _showApprovalPopup(BuildContext context, CanteenItem_Inspector item) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
