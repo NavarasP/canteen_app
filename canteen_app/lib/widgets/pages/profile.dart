@@ -1,5 +1,5 @@
-import 'package:canteen_app/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:canteen_app/Authentication/auth_screen.dart';
 import 'package:canteen_app/services/authentication_service.dart';
 
 class ProfilePage extends StatelessWidget {

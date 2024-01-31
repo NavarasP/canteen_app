@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/color_schemes.g.dart';
-import 'package:canteen_app/widgets/pages/item_list.dart';
-import 'package:canteen_app/widgets/pages/order_cart.dart';
 import 'package:canteen_app/widgets/pages/profile.dart';
+import 'package:canteen_app/widgets/pages/item_list.dart';
+import 'package:canteen_app/services/color_schemes.g.dart';
 
-class UserScreen extends StatefulWidget {
+class InspectorScreen extends StatefulWidget {
   @override
-  _UserScreenState createState() => _UserScreenState();
+  _InspectorScreenState createState() => _InspectorScreenState();
 }
 
-class _UserScreenState extends State<UserScreen> {
-  int _currentIndex = 0; 
+class _InspectorScreenState extends State<InspectorScreen> {
+  int _currentIndex = 0; // Index for the selected tab
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: _buildAppBar(), // Use a method to build the app bar
       body: _buildBody(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -31,10 +31,6 @@ class _UserScreenState extends State<UserScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
           ),
@@ -43,16 +39,14 @@ class _UserScreenState extends State<UserScreen> {
     );
   }
 
- AppBar  _buildAppBar() {
+  AppBar _buildAppBar() {
     switch (_currentIndex) {
       case 0:
-        return AppBar(title: const Text('Home'));
+        return AppBar(title: Text('Home'));
       case 1:
-        return AppBar(title: const Text('Cart'));
-      case 2:
-        return AppBar(title: const Text('Profile'));
+        return AppBar(title: Text('Profile'));
       default:
-        return AppBar();
+        return AppBar(); // Default app bar for other cases
     }
   }
 
@@ -61,8 +55,6 @@ class _UserScreenState extends State<UserScreen> {
       case 0:
         return ItemScreen();
       case 1:
-        return CartPage();
-      case 2:
         return ProfilePage();
       default:
         return Container();

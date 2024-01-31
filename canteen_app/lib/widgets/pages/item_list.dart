@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/models.dart';
-import 'package:canteen_app/services/authentication_service.dart';
-import 'package:canteen_app/services/local_service.dart';
+import 'package:canteen_app/services/models.dart';
 import 'package:canteen_app/services/api_service.dart';
+import 'package:canteen_app/services/local_service.dart';
+import 'package:canteen_app/services/authentication_service.dart';
 
 class ItemScreen extends StatelessWidget {
   @override
@@ -31,10 +31,10 @@ class ItemScreen extends StatelessWidget {
         } else {
           final String? userRole = snapshot.data?['userType'];
           switch (userRole) {
-            case 'MANAGER':
+            case 'TEACHER':
               return _buildUserContent();
 
-            case 'TEACHER':
+            case 'MANAGER':
               return _buildInspectorContent();
 
             case 'MANAGER':

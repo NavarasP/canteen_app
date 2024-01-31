@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/widgets/forms/auth_forms.dart';
+import 'package:canteen_app/Authentication/auth_forms.dart';
 
 class LoginPage extends StatefulWidget {
 

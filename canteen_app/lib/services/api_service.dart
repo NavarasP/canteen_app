@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:canteen_app/services/models.dart';
 import 'package:canteen_app/services/authentication_service.dart';
-import 'package:canteen_app/models.dart';
 
 
 class CanteenService {

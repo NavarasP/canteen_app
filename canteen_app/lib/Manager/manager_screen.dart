@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/color_schemes.g.dart';
-import 'package:canteen_app/widgets/pages/item_list.dart';
 import 'package:canteen_app/widgets/pages/profile.dart';
+import 'package:canteen_app/widgets/pages/item_list.dart';
+import 'package:canteen_app/services/color_schemes.g.dart';
 
 
 class CanteenTeamScreen extends StatefulWidget {

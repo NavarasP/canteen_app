@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:canteen_app/Users/user_screen.dart';
+import 'package:canteen_app/widgets/common_widgets.dart';
+import 'package:canteen_app/Manager/manager_screen.dart';
+import 'package:canteen_app/Inspectors/inspector_screen.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:canteen_app/services/authentication_service.dart';
-import 'package:canteen_app/screens/user_screen.dart';
-import 'package:canteen_app/screens/inspector_screen.dart';
-import 'package:canteen_app/screens/canteen_team_screen.dart';
-import 'package:canteen_app/widgets/common_widgets.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -32,10 +32,10 @@ class _LoginFormState extends State<LoginForm> {
       print(userRole);
 
       switch (userRole) {
-        case 'MANAGER':
+        case 'STUDENT':
           _navigateToReplacement(context, UserScreen());
           break;
-        case 'teacher':
+        case 'MANAGER':
           _navigateToReplacement(context, InspectorScreen());
           break;
         case 'MANAGER':

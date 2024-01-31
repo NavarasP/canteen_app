@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:canteen_app/models.dart';
+import 'package:canteen_app/services/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartService {

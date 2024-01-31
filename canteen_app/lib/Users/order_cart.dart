@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/models.dart';
+import 'package:canteen_app/services/models.dart';
 import 'package:canteen_app/services/local_service.dart';
 
 class CartPage extends StatefulWidget {

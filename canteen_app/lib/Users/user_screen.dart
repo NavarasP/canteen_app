@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/color_schemes.g.dart';
-import 'package:canteen_app/widgets/pages/item_list.dart';
+import 'package:canteen_app/Users/order_cart.dart';
 import 'package:canteen_app/widgets/pages/profile.dart';
+import 'package:canteen_app/widgets/pages/item_list.dart';
+import 'package:canteen_app/services/color_schemes.g.dart';
 
-class InspectorScreen extends StatefulWidget {
+class UserScreen extends StatefulWidget {
   @override
-  _InspectorScreenState createState() => _InspectorScreenState();
+  _UserScreenState createState() => _UserScreenState();
 }
 
-class _InspectorScreenState extends State<InspectorScreen> {
-  int _currentIndex = 0; // Index for the selected tab
-
+class _UserScreenState extends State<UserScreen> {
+  int _currentIndex = 0; 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(), // Use a method to build the app bar
+      appBar: _buildAppBar(),
       body: _buildBody(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -31,6 +31,10 @@ class _InspectorScreenState extends State<InspectorScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Cart',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
           ),
@@ -39,14 +43,16 @@ class _InspectorScreenState extends State<InspectorScreen> {
     );
   }
 
-  AppBar _buildAppBar() {
+ AppBar  _buildAppBar() {
     switch (_currentIndex) {
       case 0:
-        return AppBar(title: Text('Home'));
+        return AppBar(title: const Text('Home'));
       case 1:
-        return AppBar(title: Text('Profile'));
+        return AppBar(title: const Text('Cart'));
+      case 2:
+        return AppBar(title: const Text('Profile'));
       default:
-        return AppBar(); // Default app bar for other cases
+        return AppBar();
     }
   }
 
@@ -55,6 +61,8 @@ class _InspectorScreenState extends State<InspectorScreen> {
       case 0:
         return ItemScreen();
       case 1:
+        return CartPage();
+      case 2:
         return ProfilePage();
       default:
         return Container();
