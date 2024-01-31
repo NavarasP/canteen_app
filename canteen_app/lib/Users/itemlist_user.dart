@@ -33,16 +33,14 @@ class _ItemScreen_UsersState extends State<ItemScreen_Users> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Inspector Item List'),
-      ),
       body: _buildListItem(),
     );
   }
 
   Widget _buildListItem() {
-    // Filter items to show only approved ones
-    List<CanteenItem_Student> approvedItems = items.where((item) => item.isTodaysSpecial).toList();
+
+List<CanteenItem_Student> approvedItems = items.where((item) => item.quantity > 0).toList();
+
 
     return ListView.builder(
       itemCount: approvedItems.length,
