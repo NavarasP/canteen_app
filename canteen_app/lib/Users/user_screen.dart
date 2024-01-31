@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:canteen_app/Users/order_cart.dart';
+import 'package:canteen_app/Users/itemlist_user.dart';
 import 'package:canteen_app/widgets/pages/profile.dart';
-import 'package:canteen_app/widgets/pages/item_list.dart';
 import 'package:canteen_app/services/color_schemes.g.dart';
 
 class UserScreen extends StatefulWidget {
@@ -59,7 +59,7 @@ class _UserScreenState extends State<UserScreen> {
   Widget _buildBody() {
     switch (_currentIndex) {
       case 0:
-        return ItemScreen();
+        return ItemScreen_Users();
       case 1:
         return CartPage();
       case 2:

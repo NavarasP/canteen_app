@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:canteen_app/widgets/pages/profile.dart';
-import 'package:canteen_app/widgets/pages/item_list.dart';
+import 'package:canteen_app/Manager/itemlist_manager.dart';
 import 'package:canteen_app/services/color_schemes.g.dart';
 
 
@@ -54,7 +54,7 @@ class _CanteenTeamScreenState extends State<CanteenTeamScreen> {
   Widget _buildBody() {
     switch (_currentIndex) {
       case 0:
-        return ItemScreen();
+        return ItemScreen_Manager();
       case 1:
         return ProfilePage();
       default:

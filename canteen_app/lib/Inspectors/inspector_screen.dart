@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:canteen_app/widgets/pages/profile.dart';
-import 'package:canteen_app/widgets/pages/item_list.dart';
 import 'package:canteen_app/services/color_schemes.g.dart';
+import 'package:canteen_app/Inspectors/itemlist_inspector.dart';
 
 class InspectorScreen extends StatefulWidget {
   @override
@@ -53,7 +53,7 @@ class _InspectorScreenState extends State<InspectorScreen> {
   Widget _buildBody() {
     switch (_currentIndex) {
       case 0:
-        return ItemScreen();
+        return InspectorItemScreen();
       case 1:
         return ProfilePage();
       default:
