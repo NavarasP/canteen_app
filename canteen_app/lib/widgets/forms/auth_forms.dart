@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:canteen_app/services/authentication_service.dart';
 import 'package:canteen_app/screens/user_screen.dart';
+import 'package:canteen_app/screens/inspector_screen.dart';
+import 'package:canteen_app/screens/canteen_team_screen.dart';
 import 'package:canteen_app/widgets/common_widgets.dart';
 
 class LoginForm extends StatefulWidget {
@@ -13,38 +15,51 @@ class _LoginFormState extends State<LoginForm> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  bool isLoading = false;
+
   Future<void> _login(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
+
     String email = emailController.text;
     String password = passwordController.text;
 
-    try {
-      // Show loading indicator
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return const AlertDialog(
-            content: CircularProgressIndicator(),
-          );
-        },
-        barrierDismissible: false,
-      );
+    AuthenticationService().signIn(email, password).then((_) async {
+      final Map<String, String?> userDetails =
+          await AuthenticationService.getUserDetails();
+      final String? userRole = userDetails['userType'];
+      print(userRole);
 
-      // Call the authentication service to sign in
-      await AuthenticationService().signIn(email, password);
-
-      // Navigate to the user screen on successful login
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => UserScreen()),
-      );
-    } catch (error) {
-      // Handle authentication errors
-      // You may want to display an error message to the user
+      switch (userRole) {
+        case 'student':
+          _navigateToReplacement(context, UserScreen());
+          break;
+        case 'teacher':
+          _navigateToReplacement(context, InspectorScreen());
+          break;
+        case 'MANAGER':
+          _navigateToReplacement(context, CanteenTeamScreen());
+          break;
+        default:
+          print('Unknown user role: $userRole');
+          break;
+      }
+    }).catchError((error) {
       print('Authentication failed: $error');
+      // Handle errors (display error message to the user)
+    }).whenComplete(() {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
 
-      // Close the loading indicator
-      Navigator.pop(context);
-    }
+  void _navigateToReplacement(BuildContext context, Widget destination) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => destination),
+    );
   }
 
   @override
@@ -71,15 +86,12 @@ class _LoginFormState extends State<LoginForm> {
   }
 }
 
-
-
-
-
 class SignupForm extends StatelessWidget {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController admissionNumberController = TextEditingController();
+  final TextEditingController admissionNumberController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {

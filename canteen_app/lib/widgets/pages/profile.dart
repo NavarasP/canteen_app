@@ -14,7 +14,7 @@ class ProfilePage extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               // If still loading, display a loading indicator
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
               // If an error occurred, display an error message
               return Text('Error loading user details: ${snapshot.error}');
@@ -30,28 +30,28 @@ class ProfilePage extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 50,
                     backgroundColor: Colors.blue,
                     // Add your user's profile picture here
                     // backgroundImage: NetworkImage('URL_TO_USER_PROFILE_PICTURE'),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
                     'Hello, ${username ?? 'User'}!', // Display the username
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   // Display other user details
                   Text(
                     'Name: ${name ?? 'N/A'}',
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
                   Text(
                     'User Type: ${userType ?? 'N/A'}',
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   ElevatedButton(
                     onPressed: () async {
                       // Call the logout function
@@ -62,7 +62,7 @@ class ProfilePage extends StatelessWidget {
                               context,
                               MaterialPageRoute(builder: (context) => LoginPage()),
                             );                    },
-                    child: Text('Logout'),
+                    child: const Text('Logout'),
                   ),
                 ],
               );
