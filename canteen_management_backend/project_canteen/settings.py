@@ -9,9 +9,9 @@ SECRET_KEY = 'SECRET_KEY'
 DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:50334",  # Your frontend origin
-]
+CORS_ALLOWED_ORIGINS = ["*"]
+
+
 DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
