@@ -32,7 +32,7 @@ class _LoginFormState extends State<LoginForm> {
       print(userRole);
 
       switch (userRole) {
-        case 'student':
+        case 'MANAGER':
           _navigateToReplacement(context, UserScreen());
           break;
         case 'teacher':

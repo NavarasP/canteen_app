@@ -24,9 +24,21 @@ class _CartPageState extends State<CartPage> {
     });
   }
 
+void updateQuantity(CartItem cartItem, int change) {
+    setState(() {
+      cartItem.quantity = (cartItem.quantity + change).clamp(0, 99);
+      if (cartItem.quantity == 0) {
+        // Remove the item from the cart if its quantity is zero
+        cartItems.remove(cartItem);
+      }
+      CartService.updateCartItems(cartItems);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    double totalAmount = cartItems.fold(0, (sum, item) => sum + item.itemPrice * item.quantity);
+    double totalAmount =
+        cartItems.fold(0, (sum, item) => sum + item.itemPrice * item.quantity);
 
     return Scaffold(
       body: ListView.builder(
@@ -39,10 +51,32 @@ class _CartPageState extends State<CartPage> {
             child: ListTile(
               title: Text(cartItem.itemName),
               subtitle: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Price: \$${cartItem.itemPrice}'),
-                  const SizedBox(width: 10),
-                  Text('Count: ${cartItem.quantity}'),
+                  Row(
+                    children: [
+                      Text('Price: \$${cartItem.itemPrice}'),
+                      const SizedBox(width: 10),
+                      Text('Count: ${cartItem.quantity}'),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.remove),
+                        onPressed: () {
+                          updateQuantity(cartItem, -1);
+                        },
+                      ),
+                      Text('${cartItem.quantity}'),
+                      IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () {
+                          updateQuantity(cartItem, 1);
+                        },
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

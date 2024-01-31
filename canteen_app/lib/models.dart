@@ -8,7 +8,7 @@ class CanteenItem {
   final bool isApproved;
   final String approvedBy;
   final bool isTodaysSpecial;
-  final bool isVeg;
+  // final bool isVeg;
 
   CanteenItem({
     required this.id,
@@ -18,19 +18,19 @@ class CanteenItem {
     required this.isApproved,
     required this.approvedBy,
     required this.isTodaysSpecial,
-    required this.isVeg,
+    // required this.isVeg,
   });
 
   factory CanteenItem.fromJson(Map<String, dynamic> json) {
     return CanteenItem(
       id: json['id'],
       name: json['name'],
-      price: json['price'].toDouble(),
+      price: double.parse(json['price']),
       quantity: json['quantity'],
       isApproved: json['is_approved'],
       approvedBy: json['approved_by'] ?? '',
       isTodaysSpecial: json['is_todays_special'],
-      isVeg: json['is_veg'],
+      // isVeg: json['is_veg'],
     );
   }
 }

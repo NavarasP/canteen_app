@@ -41,4 +41,27 @@ static Future<void> saveCartItems(List<CartItem> cartItems) async {
   }
 }
 
+  static Future<void> updateCartItems(List<CartItem> cartItems) async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      // Convert the list of cart items to JSON
+      final List<Map<String, dynamic>> cartItemsJsonList =
+          cartItems.map((item) {
+        return {
+          'itemName': item.itemName,
+          'itemPrice': item.itemPrice,
+          'quantity': item.quantity,
+        };
+      }).toList();
+
+      final String cartItemsJson = json.encode(cartItemsJsonList);
+
+      // Save the JSON string to shared preferences
+      prefs.setString(cartItemsKey, cartItemsJson);
+    } catch (e) {
+      print('Error saving cart items: $e');
+    }
+  }
+
 }
