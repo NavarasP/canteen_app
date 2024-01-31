@@ -9,7 +9,8 @@ class AuthenticationService {
   static const String authTokenKey = 'authToken';
 
   // Save the auth token to SharedPreferences
-  Future<void> saveUserDetails(String authToken, String username, String name, String userType) async {
+  Future<void> saveUserDetails(
+      String authToken, String username, String name, String userType) async {
     // Use SharedPreferences to save user details locally
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('authToken', authToken);
@@ -18,7 +19,7 @@ class AuthenticationService {
     prefs.setString('userType', userType);
   }
 
-    static Future<Map<String, String?>> getUserDetails() async {
+  static Future<Map<String, String?>> getUserDetails() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return {
       'authToken': prefs.getString('authToken'),
@@ -27,7 +28,6 @@ class AuthenticationService {
       'userType': prefs.getString('userType'),
     };
   }
-  
 
   // Retrieve the auth token from SharedPreferences
   static Future<String?> getAuthToken() async {
@@ -35,15 +35,11 @@ class AuthenticationService {
     return prefs.getString(authTokenKey);
   }
 
-
   // Method to check if the user is authenticated
   Future<bool> isAuthenticated() async {
     final String? authToken = await getAuthToken();
     return authToken != null;
   }
-
-
-
 
   Future<void> signIn(String email, String password) async {
     try {
@@ -77,69 +73,68 @@ class AuthenticationService {
     }
   }
 
-Future<void> signOut() async {
-  try {
-    // Retrieve the auth token from SharedPreferences
-    final String? authToken = await getAuthToken();
+  Future<void> signOut() async {
+    try {
+      // Retrieve the auth token from SharedPreferences
+      final String? authToken = await getAuthToken();
 
-    // Clear the auth token from SharedPreferences
-     // Passing empty strings for user details
+      // Clear the auth token from SharedPreferences
+      // Passing empty strings for user details
 
-    final response = await http.post(
-      Uri.parse('$baseUrl/api/mobile/logout/'),
-      headers: {
-        'Authorization': 'Token $authToken', // Include the auth token in the headers
-      },
-      // Additional headers or data if needed
-    );
+      final response = await http.post(
+        Uri.parse('$baseUrl/api/mobile/logout/'),
+        headers: {
+          'Authorization':
+              'Token $authToken', // Include the auth token in the headers
+        },
+        // Additional headers or data if needed
+      );
 
-    if (response.statusCode == 200) {
-      await saveUserDetails('', '', '', '');
-      print('Signed out successfully!');
-    } else {
-      print('Error signing out: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        await saveUserDetails('', '', '', '');
+        print('Signed out successfully!');
+      } else {
+        print('Error signing out: ${response.statusCode}');
+        // Handle sign-out errors here
+      }
+    } catch (e) {
+      print('Error signing out: $e');
       // Handle sign-out errors here
+      throw e; // Rethrow the exception for the caller to handle
     }
-  } catch (e) {
-    print('Error signing out: $e');
-    // Handle sign-out errors here
-    throw e; // Rethrow the exception for the caller to handle
   }
-}
 
+  Future<void> signUp(String mobile, String name, String password,
+      String confirmPwd, String department) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/api/mobile/student/register/'),
+        body: {
+          'mobile': mobile,
+          'name': name,
+          'password': password,
+          'confirm_password': confirmPwd,
+          'department': department,
+        },
+      );
 
-Future<void> signUp(String mobile, String name, String password, String confirmPwd, String department) async {
-  try {
-    final response = await http.post(
-      Uri.parse('$baseUrl/api/mobile/student/register/'),
-      body: {
-        'mobile': mobile,
-        'name': name,
-        'password': password,
-        'confirm_password': confirmPwd,
-        'department': department,
-      },
-    );
+      if (response.statusCode == 201) {
+        // Parse the response JSON
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        print(responseData);
 
-    if (response.statusCode == 201) {
-      // Parse the response JSON
-      final Map<String, dynamic> responseData = json.decode(response.body);
+        // Extract any additional information you may need from the response
 
-      // Extract any additional information you may need from the response
-
-      print('Signed up successfully!');
-    } else {
-      print('Error signing up: ${response.statusCode}');
+        print('Signed up successfully!');
+      } else {
+        print('Error signing up: ${response.statusCode}');
+        // Handle signup errors here
+        // You might want to throw an exception or return an error message
+      }
+    } catch (e) {
+      print('Error signing up: $e');
       // Handle signup errors here
-      // You might want to throw an exception or return an error message
+      throw e; // Rethrow the exception for the caller to handle
     }
-  } catch (e) {
-    print('Error signing up: $e');
-    // Handle signup errors here
-    throw e; // Rethrow the exception for the caller to handle
   }
-}
-
-
-
 }
