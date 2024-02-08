@@ -2,7 +2,7 @@ asgiref==3.7.2
 backports.zoneinfo==0.2.1
 certifi==2024.2.2
 cloudinary==1.38.0
-Django==4.2.9
+Django==4.2.10
 djangorestframework==3.14.0
 pillow==10.2.0
 python-dotenv==1.0.0
