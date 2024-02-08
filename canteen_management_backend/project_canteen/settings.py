@@ -1,15 +1,14 @@
 from pathlib import Path
 import os
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
+import cloudinary
 
-# load_dotenv()
+load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'SECRET_KEY'
+SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 ALLOWED_HOSTS = ["*"]
-
-CORS_ALLOWED_ORIGINS = ["*"]
 
 
 DJANGO_APPS = [
@@ -30,7 +29,7 @@ LOCAL_APPS = [
     "student.apps.StudentConfig",
 ]
 
-INSTALLED_APPS = DJANGO_APPS  + LOCAL_APPS + ['corsheaders']
+INSTALLED_APPS = DJANGO_APPS  + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -40,7 +39,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 AUTH_USER_MODEL = "accounts.User"
@@ -105,3 +103,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = "home"
 LOGIN_URL = "accounts:login"
+
+
+cloudinary.config( 
+    cloud_name = "do6mh6z0s", 
+    api_key = os.getenv('CLOUDINARY_KEY'), 
+    api_secret = os.getenv('CLOUDINARY_SECRET') 
+)
