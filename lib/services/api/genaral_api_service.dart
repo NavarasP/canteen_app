@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
 import 'package:canteen_app/Models/general_models.dart';
 import 'package:canteen_app/services/api/authentication_service.dart';
 
@@ -25,11 +26,11 @@ class GenralService {
             .map((data) => FoodCategory.fromJson(data))
             .toList();
       } else {
-        print('Error fetching food categories: ${response.statusCode}');
+        debugPrint('Error fetching food categories: ${response.statusCode}');
         throw Exception('Failed to fetch food categories');
       }
     } catch (e) {
-      print('Error fetching food categories: $e');
+      debugPrint('Error fetching food categories: $e');
       throw e;
     }
   }
@@ -46,14 +47,12 @@ class GenralService {
 
         return coursesData.map((data) => Course.fromJson(data)).toList();
       } else {
-        print('Error fetching courses: ${response.statusCode}');
+        debugPrint('Error fetching courses: ${response.statusCode}');
         throw Exception('Failed to fetch courses');
       }
     } catch (e) {
-      print('Error fetching courses: $e');
+      debugPrint('Error fetching courses: $e');
       throw e;
     }
   }
-
-
 }

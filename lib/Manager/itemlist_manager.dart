@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:canteen_app/Models/manager_model.dart';
 import 'package:canteen_app/services/api/canteen_service__manager.dart';
 
-
-
 class ItemScreen_Manager extends StatefulWidget {
   @override
   _ItemScreenState createState() => _ItemScreenState();
@@ -20,24 +18,25 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
 
   Future<void> _loadItems() async {
     try {
-      List<CanteenItem_Manager> loadedItems = await CanteenService_Manager().getFoodList_Manager();
+      List<CanteenItem_Manager> loadedItems =
+          await CanteenServiceManager().getFoodListManager();
       setState(() {
         items = loadedItems;
       });
     } catch (e) {
       // Handle errors
-      print('Error loading items: $e');
+      debugPrint('Error loading items: $e');
     }
   }
 
   Future<void> _createNewItem(Map<String, dynamic> foodData) async {
     try {
-      await CanteenService_Manager().createFood(foodData);
+      await CanteenServiceManager().createFood(foodData);
       // Refresh the item list after creating a new item
       _loadItems();
     } catch (e) {
       // Handle errors
-      print('Error creating item: $e');
+      debugPrint('Error creating item: $e');
     }
   }
 
@@ -190,12 +189,12 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
 
   Future<void> _updateItem(int itemId, Map<String, dynamic> foodData) async {
     try {
-      await CanteenService_Manager().updateFood(itemId, foodData);
+      await CanteenServiceManager().updateFood(itemId, foodData);
       // Refresh the item list after updating the item
       _loadItems();
     } catch (e) {
       // Handle errors
-      print('Error updating item: $e');
+      debugPrint('Error updating item: $e');
     }
   }
 }

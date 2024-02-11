@@ -32,24 +32,24 @@ class _LoginFormState extends State<LoginForm> {
       final Map<String, String?> userDetails =
           await AuthenticationService.getUserDetails();
       final String? userRole = userDetails['userType'];
-      print(userRole);
+      debugPrint(userRole);
 
       switch (userRole) {
         case 'STUDENT':
           _navigateToReplacement(context, UserScreen());
           break;
-        case 'MANAGER':
+        case 'TEACHER':
           _navigateToReplacement(context, InspectorScreen());
           break;
         case 'MANAGER':
           _navigateToReplacement(context, CanteenTeamScreen());
           break;
         default:
-          print('Unknown user role: $userRole');
+          debugPrint('Unknown user role: $userRole');
           break;
       }
     }).catchError((error) {
-      print('Authentication failed: $error');
+      debugPrint('Authentication failed: $error');
       // Handle errors (display error message to the user)
     }).whenComplete(() {
       setState(() {
@@ -124,7 +124,6 @@ class SignupForm extends StatelessWidget {
                       child: Text(department),
                     ))
                 .toList(),
-                
           ),
           const SizedBox(height: 16.0),
           CommonTextField(
@@ -136,7 +135,7 @@ class SignupForm extends StatelessWidget {
             onPressed: () {
               if (_formKey.currentState?.saveAndValidate() ?? false) {
                 var formData = _formKey.currentState?.value;
-                print(formData);
+                debugPrint('$formData');
               }
             },
             text: 'Sign Up',

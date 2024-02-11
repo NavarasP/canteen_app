@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:canteen_app/Models/inspector_models.dart';
 import 'package:canteen_app/services/api/canteen_service__inspector.dart';
 
-
 class InspectorItemScreen extends StatefulWidget {
   @override
   _InspectorItemScreenState createState() => _InspectorItemScreenState();
@@ -19,24 +18,26 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
 
   Future<void> _loadItems() async {
     try {
-      List<CanteenItem_Inspector> loadedItems = await CanteenService_Inspector().getFoodList_Inspector();
+      List<CanteenItem_Inspector> loadedItems =
+          await CanteenServiceInspector().getFoodListInspector();
       setState(() {
         items = loadedItems;
       });
     } catch (e) {
       // Handle errors
-      print('Error loading items: $e');
+      debugPrint('Error loading items: $e');
     }
   }
 
   Future<void> _updateFoodStatus(int foodId, bool isApproved) async {
     try {
-      await CanteenService_Inspector().updateFood(foodId, {'is_approved': isApproved});
+      await CanteenServiceInspector()
+          .updateFood(foodId, {'is_approved': isApproved});
       // Refresh the item list after updating the food status
       _loadItems();
     } catch (e) {
       // Handle errors
-      print('Error updating food status: $e');
+      debugPrint('Error updating food status: $e');
     }
   }
 

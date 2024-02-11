@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
 import 'package:canteen_app/Models/users_models.dart';
 import 'package:canteen_app/services/api/authentication_service.dart';
 
-class CanteenService_User {
+class CanteenServiceUser {
   final String baseUrl = 'http://127.0.0.1:8000';
 
-  Future<List<CanteenItem_Student>> getFoodList_user() async {
+  Future<List<CanteenItem_Student>> getFoodListUser() async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
@@ -25,11 +26,11 @@ class CanteenService_User {
             .map((data) => CanteenItem_Student.fromJson(data))
             .toList();
       } else {
-        print('Error fetching food items: ${response.statusCode}');
+        debugPrint('Error fetching food items: ${response.statusCode}');
         throw Exception('Failed to fetch food items');
       }
     } catch (e) {
-      print('Error fetching food items: $e');
+      debugPrint('Error fetching food items: $e');
       throw e;
     }
   }

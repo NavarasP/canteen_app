@@ -69,7 +69,7 @@ class _CartPageState extends State<CartPage> {
       );
     } catch (e) {
       // Handle errors
-      print('Error placing order: $e');
+      debugPrint('Error placing order: $e');
       // Show an error dialog
       showDialog(
         context: context,

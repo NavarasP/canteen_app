@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
 import 'package:canteen_app/Models/inspector_models.dart';
 import 'package:canteen_app/services/api/authentication_service.dart';
 
-class CanteenService_Inspector {
+class CanteenServiceInspector {
   final String baseUrl = 'http://127.0.0.1:8000';
 
-  Future<List<CanteenItem_Inspector>> getFoodList_Inspector() async {
+  Future<List<CanteenItem_Inspector>> getFoodListInspector() async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
@@ -25,16 +26,16 @@ class CanteenService_Inspector {
             .map((data) => CanteenItem_Inspector.fromJson(data))
             .toList();
       } else {
-        print('Error fetching food items: ${response.statusCode}');
+        debugPrint('Error fetching food items: ${response.statusCode}');
         throw Exception('Failed to fetch food items');
       }
     } catch (e) {
-      print('Error fetching food items: $e');
+      debugPrint('Error fetching food items: $e');
       throw e;
     }
   }
 
-    Future<void> createFood(Map<String, dynamic> foodData) async {
+  Future<void> createFood(Map<String, dynamic> foodData) async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
@@ -47,19 +48,18 @@ class CanteenService_Inspector {
       );
 
       if (response.statusCode == 200) {
-        print('Food created successfully!');
+        debugPrint('Food created successfully!');
       } else {
-        print('Error creating food: ${response.statusCode}');
+        debugPrint('Error creating food: ${response.statusCode}');
         throw Exception('Failed to create food');
       }
     } catch (e) {
-      print('Error creating food: $e');
+      debugPrint('Error creating food: $e');
       throw e;
     }
   }
 
-
-    Future<void> updateFood(int foodId, Map<String, dynamic> foodData) async {
+  Future<void> updateFood(int foodId, Map<String, dynamic> foodData) async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
@@ -72,22 +72,14 @@ class CanteenService_Inspector {
       );
 
       if (response.statusCode == 200) {
-        print('Food updated successfully!');
+        debugPrint('Food updated successfully!');
       } else {
-        print('Error updating food: ${response.statusCode}');
+        debugPrint('Error updating food: ${response.statusCode}');
         throw Exception('Failed to update food');
       }
     } catch (e) {
-      print('Error updating food: $e');
+      debugPrint('Error updating food: $e');
       throw e;
     }
   }
-
-
-
-
-
-
-
-
 }

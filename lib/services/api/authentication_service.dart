@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
 class AuthenticationService {
-  final String baseUrl = 'http://127.0.0.1:8000';
+  // final String baseUrl = 'http://127.0.0.1:8000';
+  final String baseUrl = 'https://fn5bbnp1-8000.inc1.devtunnels.ms';
 
   // Key for storing the auth token in SharedPreferences
   static const String authTokenKey = 'authToken';
@@ -61,13 +64,13 @@ class AuthenticationService {
         // Save the auth token
         await saveUserDetails(authToken, username, name, userType);
 
-        print('Signed in successfully!');
+        debugPrint('Signed in successfully!');
       } else {
-        print('Error signing in: ${response.statusCode}');
+        debugPrint('Error signing in: ${response.statusCode}');
         // Handle sign-in errors here
       }
     } catch (e) {
-      print('Error signing in: $e');
+      debugPrint('Error signing in: $e');
       // Handle sign-in errors here
       throw e; // Rethrow the exception for the caller to handle
     }
@@ -92,13 +95,13 @@ class AuthenticationService {
 
       if (response.statusCode == 200) {
         await saveUserDetails('', '', '', '');
-        print('Signed out successfully!');
+        debugPrint('Signed out successfully!');
       } else {
-        print('Error signing out: ${response.statusCode}');
+        debugPrint('Error signing out: ${response.statusCode}');
         // Handle sign-out errors here
       }
     } catch (e) {
-      print('Error signing out: $e');
+      debugPrint('Error signing out: $e');
       // Handle sign-out errors here
       throw e; // Rethrow the exception for the caller to handle
     }
@@ -121,18 +124,18 @@ class AuthenticationService {
       if (response.statusCode == 201) {
         // Parse the response JSON
         final Map<String, dynamic> responseData = json.decode(response.body);
-        print(responseData);
+        debugPrint('$responseData');
 
         // Extract any additional information you may need from the response
 
-        print('Signed up successfully!');
+        debugPrint('Signed up successfully!');
       } else {
-        print('Error signing up: ${response.statusCode}');
+        debugPrint('Error signing up: ${response.statusCode}');
         // Handle signup errors here
         // You might want to throw an exception or return an error message
       }
     } catch (e) {
-      print('Error signing up: $e');
+      debugPrint('Error signing up: $e');
       // Handle signup errors here
       throw e; // Rethrow the exception for the caller to handle
     }

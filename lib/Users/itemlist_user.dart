@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:canteen_app/Models/users_models.dart';
 import 'package:canteen_app/services/local_service.dart';
-import 'package:canteen_app/services/api/canteen_service__student.dart';
-
+import 'package:canteen_app/services/api/canteen_service__user.dart';
 
 class ItemScreen_Users extends StatefulWidget {
   @override
@@ -20,13 +19,14 @@ class _ItemScreen_UsersState extends State<ItemScreen_Users> {
 
   Future<void> _loadItems() async {
     try {
-      List<CanteenItem_Student> loadedItems = await CanteenService_User().getFoodList_user();
+      List<CanteenItem_Student> loadedItems =
+          await CanteenServiceUser().getFoodListUser();
       setState(() {
         items = loadedItems;
       });
     } catch (e) {
       // Handle errors
-      print('Error loading items: $e');
+      debugPrint('Error loading items: $e');
     }
   }
 
@@ -38,9 +38,8 @@ class _ItemScreen_UsersState extends State<ItemScreen_Users> {
   }
 
   Widget _buildListItem() {
-
-List<CanteenItem_Student> approvedItems = items.where((item) => item.quantity > 0).toList();
-
+    List<CanteenItem_Student> approvedItems =
+        items.where((item) => item.quantity > 0).toList();
 
     return ListView.builder(
       itemCount: approvedItems.length,
