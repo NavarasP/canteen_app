@@ -54,14 +54,14 @@ class _CartPageState extends State<CartPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Order Placed'),
-            content: Text('Your order has been placed successfully.'),
+            title: const Text('Order Placed'),
+            content: const Text('Your order has been placed successfully.'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -75,14 +75,14 @@ class _CartPageState extends State<CartPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to place the order. Please try again.'),
+            title: const Text('Error'),
+            content: const Text('Failed to place the order. Please try again.'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -119,14 +119,14 @@ class _CartPageState extends State<CartPage> {
                   Row(
                     children: [
                       IconButton(
-                        icon: Icon(Icons.remove),
+                        icon: const Icon(Icons.remove),
                         onPressed: () {
                           updateQuantity(cartItem, -1);
                         },
                       ),
                       Text('${cartItem.quantity}'),
                       IconButton(
-                        icon: Icon(Icons.add),
+                        icon: const Icon(Icons.add),
                         onPressed: () {
                           updateQuantity(cartItem, 1);
                         },

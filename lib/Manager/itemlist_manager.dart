@@ -50,22 +50,22 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add New Item'),
+          title: const Text('Add New Item'),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: nameController,
-                decoration: InputDecoration(labelText: 'Name'),
+                decoration: const InputDecoration(labelText: 'Name'),
               ),
               TextField(
                 controller: priceController,
-                decoration: InputDecoration(labelText: 'Price'),
+                decoration: const InputDecoration(labelText: 'Price'),
               ),
               TextField(
                 controller: quantityController,
-                decoration: InputDecoration(labelText: 'Quantity'),
+                decoration: const InputDecoration(labelText: 'Quantity'),
               ),
             ],
           ),
@@ -85,7 +85,7 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
                 // Close the pop-up
                 Navigator.of(context).pop();
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         );
@@ -97,7 +97,7 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Today\'s Special'),
+        title: const Text('Today\'s Special'),
       ),
       body: _buildItemList(),
       floatingActionButton: FloatingActionButton(
@@ -105,7 +105,7 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
           // Show the pop-up to add a new item
           _showAddItemPopup(context);
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -145,22 +145,22 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Edit Item'),
+          title: const Text('Edit Item'),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: nameController,
-                decoration: InputDecoration(labelText: 'Name'),
+                decoration: const InputDecoration(labelText: 'Name'),
               ),
               TextField(
                 controller: priceController,
-                decoration: InputDecoration(labelText: 'Price'),
+                decoration: const InputDecoration(labelText: 'Price'),
               ),
               TextField(
                 controller: quantityController,
-                decoration: InputDecoration(labelText: 'Quantity'),
+                decoration: const InputDecoration(labelText: 'Quantity'),
               ),
             ],
           ),
@@ -180,7 +180,7 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
                 // Close the pop-up
                 Navigator.of(context).pop();
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         );

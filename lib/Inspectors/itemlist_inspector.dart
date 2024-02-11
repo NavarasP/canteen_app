@@ -44,7 +44,7 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inspector Item List'),
+        title: const Text('Inspector Item List'),
       ),
       body: _buildItemList(),
     );
@@ -82,22 +82,22 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Approve/Decline Item'),
+          title: const Text('Approve/Decline Item'),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('Item: ${item.name}'),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
                   // Approve the item
                   _updateFoodStatus(item.id, true);
                   Navigator.of(context).pop();
                 },
-                child: Text('Approve'),
+                child: const Text('Approve'),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
                   // Decline the item
@@ -105,7 +105,7 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
                   Navigator.of(context).pop();
                 },
                 style: ElevatedButton.styleFrom(primary: Colors.red),
-                child: Text('Decline'),
+                child: const Text('Decline'),
               ),
             ],
           ),

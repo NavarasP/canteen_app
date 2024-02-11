@@ -7,7 +7,10 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:canteen_app/services/api/authentication_service.dart';
 
 class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _LoginFormState createState() => _LoginFormState();
 }
 
@@ -92,6 +95,8 @@ class SignupForm extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController admissionNumberController =
       TextEditingController();
+
+  SignupForm({super.key});
 
   @override
   Widget build(BuildContext context) {
