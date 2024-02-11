@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:canteen_app/Models/manager_model.dart';
 import 'package:canteen_app/services/api/canteen_service__manager.dart';
 
-class ItemScreen_Manager extends StatefulWidget {
+class ItemScreenManager extends StatefulWidget {
+  const ItemScreenManager({super.key});
+
   @override
   _ItemScreenState createState() => _ItemScreenState();
 }
 
-class _ItemScreenState extends State<ItemScreen_Manager> {
-  List<CanteenItem_Manager> items = [];
+class _ItemScreenState extends State<ItemScreenManager> {
+  List<CanteenItemManager> items = [];
 
   @override
   void initState() {
@@ -18,7 +20,7 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
 
   Future<void> _loadItems() async {
     try {
-      List<CanteenItem_Manager> loadedItems =
+      List<CanteenItemManager> loadedItems =
           await CanteenServiceManager().getFoodListManager();
       setState(() {
         items = loadedItems;
@@ -113,7 +115,7 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
     return ListView.builder(
       itemCount: items.length,
       itemBuilder: (context, index) {
-        CanteenItem_Manager item = items[index];
+        CanteenItemManager item = items[index];
         return ListTile(
           title: Text(item.name),
           subtitle: Column(
@@ -132,7 +134,7 @@ class _ItemScreenState extends State<ItemScreen_Manager> {
     );
   }
 
-  void _showEditItemPopup(BuildContext context, CanteenItem_Manager item) {
+  void _showEditItemPopup(BuildContext context, CanteenItemManager item) {
     TextEditingController nameController =
         TextEditingController(text: item.name);
     TextEditingController priceController =

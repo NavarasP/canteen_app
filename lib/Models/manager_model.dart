@@ -1,4 +1,4 @@
-class CanteenItem_Manager {
+class CanteenItemManager {
   final int id;
   final String name;
   final double price;
@@ -7,7 +7,7 @@ class CanteenItem_Manager {
   final String approvedBy;
   final bool isTodaysSpecial;
 
-  CanteenItem_Manager({
+  CanteenItemManager({
     required this.id,
     required this.name,
     required this.price,
@@ -17,8 +17,8 @@ class CanteenItem_Manager {
     required this.approvedBy,
   });
 
-  factory CanteenItem_Manager.fromJson(Map<String, dynamic> json) {
-    return CanteenItem_Manager(
+  factory CanteenItemManager.fromJson(Map<String, dynamic> json) {
+    return CanteenItemManager(
       id: json['id'],
       name: json['name'],
       price: double.parse(json['price']),

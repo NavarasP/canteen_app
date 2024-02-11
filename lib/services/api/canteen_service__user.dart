@@ -7,7 +7,7 @@ import 'package:canteen_app/services/api/authentication_service.dart';
 class CanteenServiceUser {
   final String baseUrl = 'http://127.0.0.1:8000';
 
-  Future<List<CanteenItem_Student>> getFoodListUser() async {
+  Future<List<CanteenItemStudent>> getFoodListUser() async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
@@ -23,7 +23,7 @@ class CanteenServiceUser {
         final List<dynamic> itemsData = responseData['data'];
 
         return itemsData
-            .map((data) => CanteenItem_Student.fromJson(data))
+            .map((data) => CanteenItemStudent.fromJson(data))
             .toList();
       } else {
         debugPrint('Error fetching food items: ${response.statusCode}');

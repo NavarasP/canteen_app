@@ -42,9 +42,9 @@ class _CanteenTeamScreenState extends State<CanteenTeamScreen> {
   AppBar _buildAppBar() {
     switch (_currentIndex) {
       case 0:
-        return AppBar(title: Text('Home'));
+        return AppBar(title: const Text('Home'));
       case 1:
-        return AppBar(title: Text('Profile'));
+        return AppBar(title: const Text('Profile'));
       default:
         return AppBar(); // Default app bar for other cases
     }
@@ -53,9 +53,9 @@ class _CanteenTeamScreenState extends State<CanteenTeamScreen> {
   Widget _buildBody() {
     switch (_currentIndex) {
       case 0:
-        return ItemScreen_Manager();
+        return const ItemScreenManager();
       case 1:
-        return ProfilePage();
+        return const ProfilePage();
       default:
         return Container();
     }

@@ -25,7 +25,7 @@ class CommonTextField extends StatelessWidget {
   final String labelText;
   final bool obscureText;
 
-  const CommonTextField({
+  const CommonTextField({super.key, 
     required this.controller,
     required this.labelText,
     this.obscureText = false,

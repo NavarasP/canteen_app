@@ -1,4 +1,4 @@
-class CanteenItem_Student {
+class CanteenItemStudent {
   final int id;
   final String name;
   final double price;
@@ -6,7 +6,7 @@ class CanteenItem_Student {
   final bool isTodaysSpecial;
   // final bool isVeg;
 
-  CanteenItem_Student({
+  CanteenItemStudent({
     required this.id,
     required this.name,
     required this.price,
@@ -15,8 +15,8 @@ class CanteenItem_Student {
     // required this.isVeg,
   });
 
-  factory CanteenItem_Student.fromJson(Map<String, dynamic> json) {
-    return CanteenItem_Student(
+  factory CanteenItemStudent.fromJson(Map<String, dynamic> json) {
+    return CanteenItemStudent(
       id: json['id'],
       name: json['name'],
       price: double.parse(json['price']),

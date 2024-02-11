@@ -5,6 +5,8 @@ import 'package:canteen_app/Users/itemlist_user.dart';
 import 'package:canteen_app/services/color_schemes.g.dart';
 
 class UserScreen extends StatefulWidget {
+  const UserScreen({super.key});
+
   @override
   _UserScreenState createState() => _UserScreenState();
 }
@@ -59,7 +61,7 @@ class _UserScreenState extends State<UserScreen> {
   Widget _buildBody() {
     switch (_currentIndex) {
       case 0:
-        return ItemScreen_Users();
+        return const ItemScreenUsers();
       case 1:
         return CartPage();
       case 2:

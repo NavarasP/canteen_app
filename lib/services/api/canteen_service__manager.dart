@@ -7,7 +7,7 @@ import 'package:canteen_app/services/api/authentication_service.dart';
 class CanteenServiceManager {
   final String baseUrl = 'http://127.0.0.1:8000';
 
-  Future<List<CanteenItem_Manager>> getFoodListManager() async {
+  Future<List<CanteenItemManager>> getFoodListManager() async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
@@ -23,7 +23,7 @@ class CanteenServiceManager {
         final List<dynamic> itemsData = responseData['data'];
 
         return itemsData
-            .map((data) => CanteenItem_Manager.fromJson(data))
+            .map((data) => CanteenItemManager.fromJson(data))
             .toList();
       } else {
         debugPrint('Error fetching food items: ${response.statusCode}');
@@ -31,7 +31,7 @@ class CanteenServiceManager {
       }
     } catch (e) {
       debugPrint('Error fetching food items: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -55,7 +55,7 @@ class CanteenServiceManager {
       }
     } catch (e) {
       debugPrint('Error creating food: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -79,7 +79,7 @@ class CanteenServiceManager {
       }
     } catch (e) {
       debugPrint('Error updating food: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -102,7 +102,7 @@ class CanteenServiceManager {
       }
     } catch (e) {
       debugPrint('Error deleting food: $e');
-      throw e;
+      rethrow;
     }
   }
 }

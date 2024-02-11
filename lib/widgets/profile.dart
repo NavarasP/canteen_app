@@ -3,6 +3,8 @@ import 'package:canteen_app/Authentication/auth_screen.dart';
 import 'package:canteen_app/services/api/authentication_service.dart';
 
 class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

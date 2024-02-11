@@ -3,13 +3,16 @@ import 'package:canteen_app/Models/users_models.dart';
 import 'package:canteen_app/services/local_service.dart';
 import 'package:canteen_app/services/api/canteen_service__user.dart';
 
-class ItemScreen_Users extends StatefulWidget {
+class ItemScreenUsers extends StatefulWidget {
+  const ItemScreenUsers({super.key});
+
   @override
-  _ItemScreen_UsersState createState() => _ItemScreen_UsersState();
+  _ItemScreenUsersState createState() => _ItemScreenUsersState();
 }
 
-class _ItemScreen_UsersState extends State<ItemScreen_Users> {
-  List<CanteenItem_Student> items = [];
+
+class _ItemScreenUsersState extends State<ItemScreenUsers> {
+  List<CanteenItemStudent> items = [];
 
   @override
   void initState() {
@@ -19,7 +22,7 @@ class _ItemScreen_UsersState extends State<ItemScreen_Users> {
 
   Future<void> _loadItems() async {
     try {
-      List<CanteenItem_Student> loadedItems =
+      List<CanteenItemStudent> loadedItems =
           await CanteenServiceUser().getFoodListUser();
       setState(() {
         items = loadedItems;
@@ -38,13 +41,13 @@ class _ItemScreen_UsersState extends State<ItemScreen_Users> {
   }
 
   Widget _buildListItem() {
-    List<CanteenItem_Student> approvedItems =
+    List<CanteenItemStudent> approvedItems =
         items.where((item) => item.quantity > 0).toList();
 
     return ListView.builder(
       itemCount: approvedItems.length,
       itemBuilder: (context, index) {
-        CanteenItem_Student item = approvedItems[index];
+        CanteenItemStudent item = approvedItems[index];
         return ListTile(
           title: Text(item.name),
           subtitle: Column(
@@ -66,7 +69,7 @@ class _ItemScreen_UsersState extends State<ItemScreen_Users> {
     );
   }
 
-  void _addToCart(CanteenItem_Student item, BuildContext context) async {
+  void _addToCart(CanteenItemStudent item, BuildContext context) async {
     List<CartItem> cartItems = await CartService.loadCartItems();
     int index =
         cartItems.indexWhere((cartItem) => cartItem.itemName == item.name);
@@ -85,7 +88,7 @@ class _ItemScreen_UsersState extends State<ItemScreen_Users> {
     await CartService.saveCartItems(cartItems);
 
     // Show a popup indicating that the item has been added to the cart
-    showDialog(
+    showDialog (
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
