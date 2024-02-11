@@ -119,6 +119,7 @@ class SignupForm extends StatelessWidget {
                       child: Text(department),
                     ))
                 .toList(),
+                
           ),
           const SizedBox(height: 16.0),
           CommonTextField(

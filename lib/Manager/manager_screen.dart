@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:canteen_app/widgets/profile.dart';
 import 'package:canteen_app/Manager/itemlist_manager.dart';
-import 'package:canteen_app/services/color_schemes.g.dart';
 
 
 class CanteenTeamScreen extends StatefulWidget {
@@ -24,8 +23,8 @@ class _CanteenTeamScreenState extends State<CanteenTeamScreen> {
             _currentIndex = index;
           });
         },
-        selectedItemColor: lightColorScheme.primary,
-        unselectedItemColor: lightColorScheme.secondary,
+        selectedItemColor: Theme.of(context).colorScheme.primary,
+        unselectedItemColor: Theme.of(context).colorScheme.secondary,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
