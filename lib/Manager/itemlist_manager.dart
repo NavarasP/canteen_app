@@ -8,7 +8,7 @@ class ItemScreenManager extends StatefulWidget {
   @override
   _ItemScreenState createState() => _ItemScreenState();
 }
-
+ 
 class _ItemScreenState extends State<ItemScreenManager> {
   List<CanteenItemManager> items = [];
 
