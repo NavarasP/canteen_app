@@ -24,7 +24,6 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
         items = loadedItems;
       });
     } catch (e) {
-      // Handle errors
       debugPrint('Error loading items: $e');
     }
   }
@@ -33,10 +32,8 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
     try {
       await CanteenServiceInspector()
           .approveFood(foodId);
-      // Refresh the item list after updating the food status
       _loadItems();
     } catch (e) {
-      // Handle errors
       debugPrint('Error updating food status: $e');
     }
   }
@@ -52,7 +49,6 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
   }
 
   Widget _buildItemList() {
-    // Sort items to show non-approved items on top
     items.sort((a, b) => (a.isApproved ? 1 : 0) - (b.isApproved ? 1 : 0));
 
     return ListView.builder(
@@ -70,7 +66,6 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
             ],
           ),
           onTap: () {
-            // Show pop-up to approve or decline the selected item
             _showApprovalPopup(context, item);
           },
         );
@@ -92,7 +87,6 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
-                  // Approve the item
                   _updateFoodStatus(item.id, true);
                   Navigator.of(context).pop();
                 },
@@ -101,7 +95,6 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
-                  // Decline the item
                   _updateFoodStatus(item.id, false);
                   Navigator.of(context).pop();
                 },
