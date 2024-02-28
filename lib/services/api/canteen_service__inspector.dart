@@ -6,15 +6,13 @@ import 'package:canteen_app/services/api/authentication_service.dart';
 
 class CanteenServiceInspector {
   final String baseUrl = 'http://127.0.0.1:8000';
-  // final String baseUrl = 'https://fn5bbnp1-8000.inc1.devtunnels.ms';
-
 
   Future<List<CanteenItem_Inspector>> getFoodListInspector() async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
       final response = await http.get(
-        Uri.parse('$baseUrl/api/mobile/canteen/food/list/'),
+        Uri.parse('$baseUrl/api/mobile/teacher/food/list/'),
         headers: {
           'Authorization': 'Token $authToken',
         },
@@ -37,50 +35,51 @@ class CanteenServiceInspector {
     }
   }
 
-  Future<void> createFood(Map<String, dynamic> foodData) async {
+  Future<CanteenItemDetail_Inspector> getFoodDetail(int foodId) async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
-      final response = await http.post(
-        Uri.parse('$baseUrl/api/mobile/canteen/food/create/'),
+      final response = await http.get(
+        Uri.parse('$baseUrl/api/mobile/teacher/food/detail/$foodId'),
         headers: {
           'Authorization': 'Token $authToken',
         },
-        body: foodData,
       );
 
       if (response.statusCode == 200) {
-        debugPrint('Food created successfully!');
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        final Map<String, dynamic> foodData = responseData['data'];
+
+        return CanteenItemDetail_Inspector.fromJson(foodData);
       } else {
-        debugPrint('Error creating food: ${response.statusCode}');
-        throw Exception('Failed to create food');
+        debugPrint('Error fetching food detail: ${response.statusCode}');
+        throw Exception('Failed to fetch food detail');
       }
     } catch (e) {
-      debugPrint('Error creating food: $e');
+      debugPrint('Error fetching food detail: $e');
       throw e;
     }
   }
 
-  Future<void> updateFood(int foodId, Map<String, dynamic> foodData) async {
+  Future<void> approveFood(int foodId) async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
       final response = await http.post(
-        Uri.parse('$baseUrl/api/mobile/canteen/food/update/$foodId/'),
+        Uri.parse('$baseUrl/api/mobile/teacher/food/approve/$foodId'),
         headers: {
           'Authorization': 'Token $authToken',
         },
-        body: foodData,
       );
 
       if (response.statusCode == 200) {
-        debugPrint('Food updated successfully!');
+        debugPrint('Food approved successfully!');
       } else {
-        debugPrint('Error updating food: ${response.statusCode}');
-        throw Exception('Failed to update food');
+        debugPrint('Error approving food: ${response.statusCode}');
+        throw Exception('Failed to approve food');
       }
     } catch (e) {
-      debugPrint('Error updating food: $e');
+      debugPrint('Error approving food: $e');
       throw e;
     }
   }

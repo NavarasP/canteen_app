@@ -8,13 +8,10 @@ class AuthenticationService {
   final String baseUrl = 'http://127.0.0.1:8000';
   // final String baseUrl = 'https://fn5bbnp1-8000.inc1.devtunnels.ms';
 
-  // Key for storing the auth token in SharedPreferences
   static const String authTokenKey = 'authToken';
 
-  // Save the auth token to SharedPreferences
   Future<void> saveUserDetails(
       String authToken, String username, String name, String userType) async {
-    // Use SharedPreferences to save user details locally
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('authToken', authToken);
     prefs.setString('username', username);

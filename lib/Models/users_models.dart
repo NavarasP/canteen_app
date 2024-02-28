@@ -1,10 +1,12 @@
+
+
+
 class CanteenItemStudent {
   final int id;
   final String name;
   final int price;
   final int quantity;
   final bool isTodaysSpecial;
-  // final bool isVeg;
 
   CanteenItemStudent({
     required this.id,
@@ -12,7 +14,6 @@ class CanteenItemStudent {
     required this.price,
     required this.quantity,
     required this.isTodaysSpecial,
-    // required this.isVeg,
   });
 
   factory CanteenItemStudent.fromJson(Map<String, dynamic> json) {
@@ -22,7 +23,6 @@ class CanteenItemStudent {
       price: json['price'],
       quantity: json['quantity'],
       isTodaysSpecial: json['is_todays_special'],
-      // isVeg: json['is_veg'],
     );
   }
 }
@@ -58,48 +58,86 @@ class CartItem {
 
 
 
+class Order {
+  final int id;
+  final String orderId;
+  final double totalPrice;
+  final String status;
 
-// class FoodItemDetails {
-//   final int id;
-//   final String name;
-//   final double price;
-//   final int quantity;
-//   final bool isApproved;
-//   final bool isTodaysSpecial;
-//   final int categoryId;
-//   final int approvedById;
-//   final String categoryName;
-//   final String approvedByName;
+  Order({
+    required this.id,
+    required this.orderId,
+    required this.totalPrice,
+    required this.status,
+  });
 
-//   FoodItemDetails({
-//     required this.id,
-//     required this.name,
-//     required this.price,
-//     required this.quantity,
-//     required this.isApproved,
-//     required this.isTodaysSpecial,
-//     required this.categoryId,
-//     required this.approvedById,
-//     required this.categoryName,
-//     required this.approvedByName,
-//   });
+  factory Order.fromJson(Map<String, dynamic> json) {
+    return Order(
+      id: json['id'],
+      orderId: json['order_id'],
+      totalPrice: json['total_price'].toDouble(),
+      status: json['status'],
+    );
+  }
+}
 
-//   factory FoodItemDetails.fromJson(Map<String, dynamic> json) {
-//     return FoodItemDetails(
-//       id: json['id'],
-//       name: json['name'],
-//       price: json['price'].toDouble(),
-//       quantity: json['quantity'],
-//       isApproved: json['is_approved'],
-//       isTodaysSpecial: json['is_todays_special'],
-//       categoryId: json['category_id'],
-//       approvedById: json['approved_by_id'],
-//       categoryName: json['category_name'],
-//       approvedByName: json['approved_by_name'] ?? '',
-//     );
-//   }
-// }
+class OrderDetail {
+  final String orderId;
+  final double totalPrice;
+  final int totalQuantity;
+  final String deliveryTime;
+  final String status;
+  final List<OrderItem> items;
 
+  OrderDetail({
+    required this.orderId,
+    required this.totalPrice,
+    required this.totalQuantity,
+    required this.deliveryTime,
+    required this.status,
+    required this.items,
+  });
+
+  factory OrderDetail.fromJson(Map<String, dynamic> json) {
+    return OrderDetail(
+      orderId: json['order_id'],
+      totalPrice: json['total_price'].toDouble(),
+      totalQuantity: json['total_quantity'],
+      deliveryTime: json['delivery_time'],
+      status: json['status'],
+      items: List<OrderItem>.from(json['items'].map((item) => OrderItem.fromJson(item))),
+    );
+  }
+}
+
+class OrderItem {
+  final int id;
+  final String foodId;
+  final String foodName;
+  final int quantity;
+  final double price;
+  final String? imageUrl;
+
+  OrderItem({
+    required this.id,
+    required this.foodId,
+    required this.foodName,
+    required this.quantity,
+    required this.price,
+    this.imageUrl,
+  });
+
+  factory OrderItem.fromJson(Map<String, dynamic> json) {
+    return OrderItem(
+      id: json['id'],
+      foodId: json['food_id'],
+      foodName: json['food_name'],
+      quantity: json['quantity'],
+      price: json['price'].toDouble(),
+      imageUrl: json['image_url'],
+    );
+  }
+}
 
 
 

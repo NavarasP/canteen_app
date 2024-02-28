@@ -32,7 +32,7 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
   Future<void> _updateFoodStatus(int foodId, bool isApproved) async {
     try {
       await CanteenServiceInspector()
-          .updateFood(foodId, {'is_approved': isApproved});
+          .approveFood(foodId);
       // Refresh the item list after updating the food status
       _loadItems();
     } catch (e) {

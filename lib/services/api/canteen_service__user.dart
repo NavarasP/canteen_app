@@ -36,4 +36,86 @@ class CanteenServiceUser {
       throw e;
     }
   }
+
+
+  Future<void> placeOrder(List<Map<String, dynamic>> products, String deliveryTime) async {
+    try {
+      final String? authToken = await AuthenticationService.getAuthToken();
+
+      final response = await http.post(
+        Uri.parse('$baseUrl/api/mobile/student/order/'),
+        headers: {
+          'Authorization': 'Token $authToken',
+        },
+        body: {
+          'products': jsonEncode(products),
+          'delivery_time': deliveryTime,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        debugPrint('Order placed successfully!');
+      } else {
+        debugPrint('Error placing order: ${response.statusCode}');
+        throw Exception('Failed to place order');
+      }
+    } catch (e) {
+      debugPrint('Error placing order: $e');
+      rethrow;
+    }
+  }
+
+  Future<List<Order>> getOrderListForStudent() async {
+    try {
+      final String? authToken = await AuthenticationService.getAuthToken();
+
+      final response = await http.get(
+        Uri.parse('$baseUrl/api/mobile/student/order/list/'),
+        headers: {
+          'Authorization': 'Token $authToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        final List<dynamic> ordersData = responseData['data'];
+
+        return ordersData.map((data) => Order.fromJson(data)).toList();
+      } else {
+        debugPrint('Error fetching order list: ${response.statusCode}');
+        throw Exception('Failed to fetch order list');
+      }
+    } catch (e) {
+      debugPrint('Error fetching order list: $e');
+      throw e;
+    }
+  }
+
+  Future<OrderDetail> getOrderDetailForStudent(String orderId) async {
+    try {
+      final String? authToken = await AuthenticationService.getAuthToken();
+
+      final response = await http.get(
+        Uri.parse('$baseUrl/api/mobile/student/order/detail/$orderId'),
+        headers: {
+          'Authorization': 'Token $authToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        final Map<String, dynamic> orderData = responseData['data'];
+
+        return OrderDetail.fromJson(orderData);
+      } else {
+        debugPrint('Error fetching order detail: ${response.statusCode}');
+        throw Exception('Failed to fetch order detail');
+      }
+    } catch (e) {
+      debugPrint('Error fetching order detail: $e');
+      throw e;
+    }
+  }
+
+
 }
