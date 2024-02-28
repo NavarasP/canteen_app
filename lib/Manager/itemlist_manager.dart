@@ -76,7 +76,7 @@ class _ItemScreenState extends State<ItemScreenManager> {
                 // Validate and save the new item data
                 Map<String, dynamic> foodData = {
                   'name': nameController.text,
-                  'price': double.parse(priceController.text),
+                  'price': int.parse(priceController.text),
                   'quantity': int.parse(quantityController.text),
                 };
 
@@ -97,9 +97,6 @@ class _ItemScreenState extends State<ItemScreenManager> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Today\'s Special'),
-      ),
       body: _buildItemList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -171,7 +168,7 @@ class _ItemScreenState extends State<ItemScreenManager> {
                 // Validate and save the updated item data
                 Map<String, dynamic> foodData = {
                   'name': nameController.text,
-                  'price': double.parse(priceController.text),
+                  'price': int.parse(priceController.text),
                   'quantity': int.parse(quantityController.text),
                 };
 

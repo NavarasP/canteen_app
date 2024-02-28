@@ -6,10 +6,12 @@ import 'package:canteen_app/services/api/authentication_service.dart';
 
 class CanteenServiceManager {
   final String baseUrl = 'http://127.0.0.1:8000';
+    // final String baseUrl = 'https://fn5bbnp1-8000.inc1.devtunnels.ms';
+
 
   Future<List<CanteenItemManager>> getFoodListManager() async {
     try {
-      final String? authToken = await AuthenticationService.getAuthToken();
+      final  authToken = await AuthenticationService.getAuthToken();
 
       final response = await http.get(
         Uri.parse('$baseUrl/api/mobile/canteen/food/list/'),
@@ -18,14 +20,17 @@ class CanteenServiceManager {
         },
       );
 
+
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         final List<dynamic> itemsData = responseData['data'];
+
 
         return itemsData
             .map((data) => CanteenItemManager.fromJson(data))
             .toList();
       } else {
+
         debugPrint('Error fetching food items: ${response.statusCode}');
         throw Exception('Failed to fetch food items');
       }

@@ -6,6 +6,8 @@ import 'package:canteen_app/services/api/authentication_service.dart';
 
 class CanteenServiceInspector {
   final String baseUrl = 'http://127.0.0.1:8000';
+  // final String baseUrl = 'https://fn5bbnp1-8000.inc1.devtunnels.ms';
+
 
   Future<List<CanteenItem_Inspector>> getFoodListInspector() async {
     try {

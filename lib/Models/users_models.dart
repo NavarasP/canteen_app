@@ -1,7 +1,7 @@
 class CanteenItemStudent {
   final int id;
   final String name;
-  final double price;
+  final int price;
   final int quantity;
   final bool isTodaysSpecial;
   // final bool isVeg;
@@ -19,7 +19,7 @@ class CanteenItemStudent {
     return CanteenItemStudent(
       id: json['id'],
       name: json['name'],
-      price: double.parse(json['price']),
+      price: json['price'],
       quantity: json['quantity'],
       isTodaysSpecial: json['is_todays_special'],
       // isVeg: json['is_veg'],
@@ -29,7 +29,7 @@ class CanteenItemStudent {
 
 class CartItem {
   final String itemName;
-  final double itemPrice;
+  final int itemPrice;
   int quantity;
 
   CartItem({

@@ -5,8 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class AuthenticationService {
-  // final String baseUrl = 'http://127.0.0.1:8000';
-  final String baseUrl = 'https://fn5bbnp1-8000.inc1.devtunnels.ms';
+  final String baseUrl = 'http://127.0.0.1:8000';
+  // final String baseUrl = 'https://fn5bbnp1-8000.inc1.devtunnels.ms';
 
   // Key for storing the auth token in SharedPreferences
   static const String authTokenKey = 'authToken';

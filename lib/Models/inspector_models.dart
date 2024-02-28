@@ -1,7 +1,7 @@
 class CanteenItem_Inspector {
   final int id;
   final String name;
-  final double price;
+  final int price;
   final int quantity;
   final bool isApproved;
 
@@ -19,7 +19,7 @@ class CanteenItem_Inspector {
     return CanteenItem_Inspector(
       id: json['id'],
       name: json['name'],
-      price: double.parse(json['price']),
+      price: json['price'],
       quantity: json['quantity'],
       isApproved: json['is_approved'],
 

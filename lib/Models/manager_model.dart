@@ -1,7 +1,7 @@
 class CanteenItemManager {
   final int id;
   final String name;
-  final double price;
+  final int price;
   final int quantity;
   final bool isApproved;
   final String approvedBy;
@@ -21,7 +21,7 @@ class CanteenItemManager {
     return CanteenItemManager(
       id: json['id'],
       name: json['name'],
-      price: double.parse(json['price']),
+      price: json['price'],
       quantity: json['quantity'],
       isApproved: json['is_approved'],
       isTodaysSpecial: json['is_todays_special'],
