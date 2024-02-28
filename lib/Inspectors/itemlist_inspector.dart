@@ -105,7 +105,7 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
                   _updateFoodStatus(item.id, false);
                   Navigator.of(context).pop();
                 },
-                style: ElevatedButton.styleFrom(primary: Colors.red),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 child: const Text('Decline'),
               ),
             ],

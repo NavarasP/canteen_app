@@ -9,12 +9,12 @@ class InspectorScreen extends StatefulWidget {
 }
 
 class _InspectorScreenState extends State<InspectorScreen> {
-  int _currentIndex = 0; // Index for the selected tab
+  int _currentIndex = 0; 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(), // Use a method to build the app bar
+      appBar: _buildAppBar(), 
       body: _buildBody(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -46,7 +46,7 @@ class _InspectorScreenState extends State<InspectorScreen> {
       case 1:
         return AppBar(title: Text('Profile'));
       default:
-        return AppBar(); // Default app bar for other cases
+        return AppBar(); 
     }
   }
 
