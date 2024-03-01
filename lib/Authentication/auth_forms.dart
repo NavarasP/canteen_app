@@ -71,7 +71,7 @@ class _LoginFormState extends State<LoginForm> {
       children: [
         CommonTextField(
           controller: emailController,
-          labelText: 'Email',
+          labelText: 'Username or Phone Number',
         ),
         const SizedBox(height: 16.0),
         CommonTextField(

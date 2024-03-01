@@ -19,7 +19,7 @@ class CanteenServiceUser {
           'Authorization': 'Token $authToken',
         },
       );
-
+      
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         final List<dynamic> itemsData = responseData['data'];
@@ -33,7 +33,7 @@ class CanteenServiceUser {
       }
     } catch (e) {
       debugPrint('Error fetching food items: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -87,7 +87,7 @@ class CanteenServiceUser {
       }
     } catch (e) {
       debugPrint('Error fetching order list: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -113,7 +113,7 @@ class CanteenServiceUser {
       }
     } catch (e) {
       debugPrint('Error fetching order detail: $e');
-      throw e;
+      rethrow;
     }
   }
 

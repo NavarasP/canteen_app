@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/widgets/profile.dart';
-import 'package:canteen_app/Users/order_cart.dart';
+import 'package:canteen_app/Users/cart.dart';
+import 'package:canteen_app/Users/orders.dart';
 import 'package:canteen_app/Users/itemlist_user.dart';
 import 'package:canteen_app/services/color_schemes.g.dart';
 
@@ -37,8 +37,8 @@ class _UserScreenState extends State<UserScreen> {
             label: 'Cart',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+            icon: Icon(Icons.gif_box),
+            label: 'Order',
           ),
         ],
       ),
@@ -52,7 +52,7 @@ class _UserScreenState extends State<UserScreen> {
       case 1:
         return AppBar(title: const Text('Cart'));
       case 2:
-        return AppBar(title: const Text('Profile'));
+        return AppBar(title: const Text('Order'));
       default:
         return AppBar();
     }
@@ -65,7 +65,7 @@ class _UserScreenState extends State<UserScreen> {
       case 1:
         return CartPage();
       case 2:
-        return ProfilePage();
+        return OrderPage();
       default:
         return Container();
     }

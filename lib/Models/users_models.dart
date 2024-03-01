@@ -28,11 +28,13 @@ class CanteenItemStudent {
 }
 
 class CartItem {
+  final int itemId; 
   final String itemName;
   final int itemPrice;
   int quantity;
 
   CartItem({
+    required this.itemId, 
     required this.itemName,
     required this.itemPrice,
     required this.quantity,
@@ -40,20 +42,23 @@ class CartItem {
 
   factory CartItem.fromJson(Map<String, dynamic> json) {
     return CartItem(
-      itemName: json['itemName'] ?? '',
-      itemPrice: json['itemPrice'] ?? 0.0,
-      quantity: json['quantity'] ?? 0,
+      itemId: json['itemId'], 
+      itemName: json['itemName'],
+      itemPrice: json['itemPrice'],
+      quantity: json['quantity']
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'itemId': itemId, 
       'itemName': itemName,
       'itemPrice': itemPrice,
       'quantity': quantity,
     };
   }
 }
+
 
 
 

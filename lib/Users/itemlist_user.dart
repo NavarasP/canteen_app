@@ -4,12 +4,11 @@ import 'package:canteen_app/services/local_service.dart';
 import 'package:canteen_app/services/api/canteen_service__user.dart';
 
 class ItemScreenUsers extends StatefulWidget {
-  const ItemScreenUsers({super.key});
+  const ItemScreenUsers({Key? key}) : super(key: key);
 
   @override
   _ItemScreenUsersState createState() => _ItemScreenUsersState();
 }
-
 
 class _ItemScreenUsersState extends State<ItemScreenUsers> {
   List<CanteenItemStudent> items = [];
@@ -28,7 +27,6 @@ class _ItemScreenUsersState extends State<ItemScreenUsers> {
         items = loadedItems;
       });
     } catch (e) {
-      // Handle errors
       debugPrint('Error loading items: $e');
     }
   }
@@ -58,11 +56,10 @@ class _ItemScreenUsersState extends State<ItemScreenUsers> {
             ],
           ),
           trailing: ElevatedButton(
-            onPressed: () {
-              // Add the item to the cart and show the popup
+            onPressed:  () {
               _addToCart(item, context);
             },
-            child: Text('Add to Cart'),
+            child: const Text('Add to Cart'),
           ),
         );
       },
@@ -71,13 +68,13 @@ class _ItemScreenUsersState extends State<ItemScreenUsers> {
 
   void _addToCart(CanteenItemStudent item, BuildContext context) async {
     List<CartItem> cartItems = await CartService.loadCartItems();
-    int index =
-        cartItems.indexWhere((cartItem) => cartItem.itemName == item.name);
+    int index = cartItems.indexWhere((cartItem) => cartItem.itemId == item.id);
 
     if (index != -1) {
       cartItems[index].quantity++;
     } else {
       cartItems.add(CartItem(
+        itemId: item.id,
         itemName: item.name,
         itemPrice: item.price,
         quantity: 1,
@@ -85,10 +82,10 @@ class _ItemScreenUsersState extends State<ItemScreenUsers> {
     }
 
     // Save the updated cart items
-    await CartService.saveCartItems(cartItems);
+    await CartService.updateCartItems(cartItems);
 
     // Show a popup indicating that the item has been added to the cart
-    showDialog (
+    showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(

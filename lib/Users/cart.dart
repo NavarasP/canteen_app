@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:canteen_app/Models/users_models.dart';
 import 'package:canteen_app/services/local_service.dart';
+import 'package:canteen_app/services/api/canteen_service__user.dart';
 
 class CartPage extends StatefulWidget {
   @override
@@ -36,58 +37,90 @@ class _CartPageState extends State<CartPage> {
   }
 
   Future<void> checkout() async {
-    // Implement your checkout logic here
-    // Call the order API with cartItems
-    try {
-      // Placeholder API call
-      // Replace this with your actual order API call
-      // await OrderService.placeOrder(cartItems);
+    // Show a confirmation dialog
+    bool confirm = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Order'),
+          content: const Text('Are you sure you want to place this order?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); 
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true); 
+              },
+              child: const Text('Confirm'),
+            ),
+          ],
+        );
+      },
+    );
 
-      // Clear the cart after a successful order
-      await CartService.clearCart();
-      setState(() {
-        cartItems.clear();
-      });
+    if (confirm == true) {
+      try {
+        // Prepare the list of products
+        List<Map<String, dynamic>> products = cartItems.map((item) {
+          return {
+            'id': item.itemId,
+            'quantity': item.quantity,
+          };
+        }).toList();
 
-      // Show a confirmation dialog
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Order Placed'),
-            content: const Text('Your order has been placed successfully.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    } catch (e) {
-      // Handle errors
-      debugPrint('Error placing order: $e');
-      // Show an error dialog
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Error'),
-            content: const Text('Failed to place the order. Please try again.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+        // Call the API to place the order
+        await CanteenServiceUser().placeOrder(products, DateTime.now().toString()); // Pass delivery time here
+
+        // Clear the cart after a successful order
+        await CartService.clearCart();
+        setState(() {
+          cartItems.clear();
+        });
+
+        // Show a success dialog
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Order Placed'),
+              content: const Text('Your order has been placed successfully.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } catch (e) {
+        // Handle errors
+        debugPrint('Error placing order: $e');
+        // Show an error dialog
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Error'),
+              content: const Text('Failed to place the order. Please try again.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
   }
 
@@ -156,4 +189,6 @@ class _CartPageState extends State<CartPage> {
       ),
     );
   }
+
+ 
 }

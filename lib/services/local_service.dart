@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:canteen_app/Models/users_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 class CartService {
   static const String cartItemsKey = 'cartItems';
 
@@ -28,6 +27,7 @@ class CartService {
       final List<Map<String, dynamic>> cartItemsJsonList =
           cartItems.map((item) {
         return {
+          'itemId': item.itemId, // Use itemId as identifier
           'itemName': item.itemName,
           'itemPrice': item.itemPrice,
           'quantity': item.quantity,
@@ -51,6 +51,7 @@ class CartService {
       final List<Map<String, dynamic>> cartItemsJsonList =
           cartItems.map((item) {
         return {
+          'itemId': item.itemId, // Use itemId as identifier
           'itemName': item.itemName,
           'itemPrice': item.itemPrice,
           'quantity': item.quantity,
@@ -77,3 +78,4 @@ class CartService {
     }
   }
 }
+
