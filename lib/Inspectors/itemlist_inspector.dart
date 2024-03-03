@@ -3,12 +3,15 @@ import 'package:canteen_app/Models/inspector_models.dart';
 import 'package:canteen_app/services/api/canteen_service__inspector.dart';
 
 class InspectorItemScreen extends StatefulWidget {
+  const InspectorItemScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _InspectorItemScreenState createState() => _InspectorItemScreenState();
 }
 
 class _InspectorItemScreenState extends State<InspectorItemScreen> {
-  List<CanteenItem_Inspector> items = [];
+  List<CanteenItemInspector> items = [];
 
   @override
   void initState() {
@@ -18,7 +21,7 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
 
   Future<void> _loadItems() async {
     try {
-      List<CanteenItem_Inspector> loadedItems =
+      List<CanteenItemInspector> loadedItems =
           await CanteenServiceInspector().getFoodListInspector();
       setState(() {
         items = loadedItems;
@@ -54,7 +57,7 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
     return ListView.builder(
       itemCount: items.length,
       itemBuilder: (context, index) {
-        CanteenItem_Inspector item = items[index];
+        CanteenItemInspector item = items[index];
         return ListTile(
           title: Text(item.name),
           subtitle: Column(
@@ -73,7 +76,7 @@ class _InspectorItemScreenState extends State<InspectorItemScreen> {
     );
   }
 
-  void _showApprovalPopup(BuildContext context, CanteenItem_Inspector item) {
+  void _showApprovalPopup(BuildContext context, CanteenItemInspector item) {
     showDialog(
       context: context,
       builder: (BuildContext context) {

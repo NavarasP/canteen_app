@@ -36,13 +36,16 @@ class _LoginFormState extends State<LoginForm> {
 
       switch (userRole) {
         case 'STUDENT':
-          _navigateToReplacement(context, UserScreen());
+          // ignore: use_build_context_synchronously
+          _navigateToReplacement(context, const UserScreen());
           break;
         case 'TEACHER':
-          _navigateToReplacement(context, InspectorScreen());
+          // ignore: use_build_context_synchronously
+          _navigateToReplacement(context, const InspectorScreen());
           break;
         case 'MANAGER':
-          _navigateToReplacement(context, CanteenTeamScreen());
+          // ignore: use_build_context_synchronously
+          _navigateToReplacement(context, const CanteenTeamScreen());
           break;
         default:
           debugPrint('Unknown user role: $userRole');

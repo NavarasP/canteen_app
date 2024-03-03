@@ -4,7 +4,10 @@ import 'package:canteen_app/services/color_schemes.g.dart';
 import 'package:canteen_app/Inspectors/itemlist_inspector.dart';
 
 class InspectorScreen extends StatefulWidget {
+  const InspectorScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _InspectorScreenState createState() => _InspectorScreenState();
 }
 
@@ -42,9 +45,9 @@ class _InspectorScreenState extends State<InspectorScreen> {
   AppBar _buildAppBar() {
     switch (_currentIndex) {
       case 0:
-        return AppBar(title: Text('Home'));
+        return AppBar(title: const Text('Home'));
       case 1:
-        return AppBar(title: Text('Profile'));
+        return AppBar(title: const Text('Profile'));
       default:
         return AppBar(); 
     }
@@ -53,9 +56,9 @@ class _InspectorScreenState extends State<InspectorScreen> {
   Widget _buildBody() {
     switch (_currentIndex) {
       case 0:
-        return InspectorItemScreen();
+        return const InspectorItemScreen();
       case 1:
-        return ProfilePage();
+        return const ProfilePage();
       default:
         return Container();
     }

@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:canteen_app/Models/users_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+
 class CartService {
   static const String cartItemsKey = 'cartItems';
 

@@ -4,7 +4,10 @@ import 'package:canteen_app/Manager/itemlist_manager.dart';
 
 
 class CanteenTeamScreen extends StatefulWidget {
+  const CanteenTeamScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _CanteenTeamScreenState createState() => _CanteenTeamScreenState();
 }
 

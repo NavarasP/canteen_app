@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:canteen_app/Authentication/auth_forms.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginPageState createState() => _LoginPageState();
 }
 
@@ -27,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            showLoginForm ? LoginForm() : SignupForm(),
+            showLoginForm ? const LoginForm() : SignupForm(),
             const SizedBox(height: 16.0),
             InkWell(
               onTap: toggleForm,

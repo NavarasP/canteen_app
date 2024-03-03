@@ -69,7 +69,7 @@ class AuthenticationService {
     } catch (e) {
       debugPrint('Error signing in: $e');
       // Handle sign-in errors here
-      throw e; // Rethrow the exception for the caller to handle
+      rethrow; // Rethrow the exception for the caller to handle
     }
   }
 
@@ -100,7 +100,7 @@ class AuthenticationService {
     } catch (e) {
       debugPrint('Error signing out: $e');
       // Handle sign-out errors here
-      throw e; // Rethrow the exception for the caller to handle
+      rethrow; // Rethrow the exception for the caller to handle
     }
   }
 
@@ -134,7 +134,7 @@ class AuthenticationService {
     } catch (e) {
       debugPrint('Error signing up: $e');
       // Handle signup errors here
-      throw e; // Rethrow the exception for the caller to handle
+      rethrow; // Rethrow the exception for the caller to handle
     }
   }
 }

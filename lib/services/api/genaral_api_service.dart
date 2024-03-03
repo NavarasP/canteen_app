@@ -33,7 +33,7 @@ class GenralService {
       }
     } catch (e) {
       debugPrint('Error fetching food categories: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -54,7 +54,7 @@ class GenralService {
       }
     } catch (e) {
       debugPrint('Error fetching courses: $e');
-      throw e;
+      rethrow;
     }
   }
 }

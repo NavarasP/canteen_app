@@ -1,10 +1,14 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:canteen_app/Models/users_models.dart';
 import 'package:canteen_app/services/local_service.dart';
 import 'package:canteen_app/services/api/canteen_service__user.dart';
 
 class CartPage extends StatefulWidget {
+  const CartPage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _CartPageState createState() => _CartPageState();
 }
 
@@ -36,8 +40,8 @@ class _CartPageState extends State<CartPage> {
     });
   }
 
-  Future<void> checkout() async {
-    // Show a confirmation dialog
+  Future<void> checkout(String selectedDateTime) async {
+    // Proceed with the checkout using the selectedDateTime
     bool confirm = await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -47,13 +51,13 @@ class _CartPageState extends State<CartPage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(false); 
+                Navigator.of(context).pop(false); // Dismiss dialog with false
               },
               child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(true); 
+                Navigator.of(context).pop(true); // Dismiss dialog with true
               },
               child: const Text('Confirm'),
             ),
@@ -73,7 +77,7 @@ class _CartPageState extends State<CartPage> {
         }).toList();
 
         // Call the API to place the order
-        await CanteenServiceUser().placeOrder(products, DateTime.now().toString()); // Pass delivery time here
+        await CanteenServiceUser().placeOrder(products, selectedDateTime);
 
         // Clear the cart after a successful order
         await CartService.clearCart();
@@ -83,6 +87,7 @@ class _CartPageState extends State<CartPage> {
 
         // Show a success dialog
         showDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
@@ -104,6 +109,7 @@ class _CartPageState extends State<CartPage> {
         debugPrint('Error placing order: $e');
         // Show an error dialog
         showDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
@@ -122,7 +128,7 @@ class _CartPageState extends State<CartPage> {
         );
       }
     }
-  }
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +186,7 @@ class _CartPageState extends State<CartPage> {
             Text('Total: \$${totalAmount.toStringAsFixed(2)}'),
             ElevatedButton(
               onPressed: () {
-                checkout(); // Call the checkout function
+                showDateTimePicker(context);
               },
               child: const Text('Checkout'),
             ),
@@ -190,5 +196,38 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
- 
+void showDateTimePicker(BuildContext context) async {
+  DateTime? selectedDateTime = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime.now(),
+    lastDate: DateTime.now().add(const Duration(days: 7)), 
+  );
+
+  if (selectedDateTime != null) {
+    TimeOfDay? selectedTime = await showTimePicker(
+      // ignore: use_build_context_synchronously
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (selectedTime != null) {
+      // Combine the selected date and time into a single DateTime object
+      selectedDateTime = DateTime(
+        selectedDateTime.year,
+        selectedDateTime.month,
+        selectedDateTime.day,
+        selectedTime.hour,
+        selectedTime.minute,
+      );
+
+      // Format the selectedDateTime into the desired format
+      String formattedDateTime = DateFormat("MMM dd yyyy HH:mm:ss").format(selectedDateTime);
+
+      // Call checkout function with formatted delivery date and time
+      checkout(formattedDateTime);
+    }
+  }
+}
+
 }

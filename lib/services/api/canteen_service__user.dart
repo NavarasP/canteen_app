@@ -99,6 +99,7 @@ class CanteenServiceUser {
         Uri.parse('$baseUrl/api/mobile/student/order/detail/$orderId'),
         headers: {
           'Authorization': 'Token $authToken',
+          "Access-Control-Allow-Origin": "*",
         },
       );
 

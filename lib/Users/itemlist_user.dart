@@ -4,9 +4,10 @@ import 'package:canteen_app/services/local_service.dart';
 import 'package:canteen_app/services/api/canteen_service__user.dart';
 
 class ItemScreenUsers extends StatefulWidget {
-  const ItemScreenUsers({Key? key}) : super(key: key);
+  const ItemScreenUsers({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ItemScreenUsersState createState() => _ItemScreenUsersState();
 }
 
@@ -86,17 +87,18 @@ class _ItemScreenUsersState extends State<ItemScreenUsers> {
 
     // Show a popup indicating that the item has been added to the cart
     showDialog(
+      // ignore: use_build_context_synchronously
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Item Added'),
+          title: const Text('Item Added'),
           content: Text('${item.name} has been added to the cart.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );

@@ -1,5 +1,5 @@
 
-class CanteenItem_Inspector {
+class CanteenItemInspector {
   final int id;
   final String name;
   final String price;
@@ -7,7 +7,7 @@ class CanteenItem_Inspector {
   final String? imageUrl;
   final bool isApproved;
 
-  CanteenItem_Inspector({
+  CanteenItemInspector({
     required this.id,
     required this.name,
     required this.price,
@@ -16,8 +16,8 @@ class CanteenItem_Inspector {
     required this.isApproved,
   });
 
-  factory CanteenItem_Inspector.fromJson(Map<String, dynamic> json) {
-    return CanteenItem_Inspector(
+  factory CanteenItemInspector.fromJson(Map<String, dynamic> json) {
+    return CanteenItemInspector(
       id: json['id'],
       name: json['name'],
       price: json['price'],
@@ -28,7 +28,7 @@ class CanteenItem_Inspector {
   }
 }
 
-class CanteenItemDetail_Inspector {
+class CanteenItemDetailInspector {
   final int id;
   final String name;
   final String price;
@@ -38,7 +38,7 @@ class CanteenItemDetail_Inspector {
   final String categoryName;
   final String? imageUrl;
 
-  CanteenItemDetail_Inspector({
+  CanteenItemDetailInspector({
     required this.id,
     required this.name,
     required this.price,
@@ -49,8 +49,8 @@ class CanteenItemDetail_Inspector {
     this.imageUrl,
   });
 
-  factory CanteenItemDetail_Inspector.fromJson(Map<String, dynamic> json) {
-    return CanteenItemDetail_Inspector(
+  factory CanteenItemDetailInspector.fromJson(Map<String, dynamic> json) {
+    return CanteenItemDetailInspector(
       id: json['id'],
       name: json['name'],
       price: json['price'],

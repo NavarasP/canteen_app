@@ -4,10 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:canteen_app/Models/inspector_models.dart';
 import 'package:canteen_app/services/api/authentication_service.dart';
 
+
 class CanteenServiceInspector {
   final String baseUrl = 'http://127.0.0.1:8000';
 
-  Future<List<CanteenItem_Inspector>> getFoodListInspector() async {
+  Future<List<CanteenItemInspector>> getFoodListInspector() async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
@@ -23,7 +24,7 @@ class CanteenServiceInspector {
         final List<dynamic> itemsData = responseData['data'];
 
         return itemsData
-            .map((data) => CanteenItem_Inspector.fromJson(data))
+            .map((data) => CanteenItemInspector.fromJson(data))
             .toList();
       } else {
         debugPrint('Error fetching food items: ${response.statusCode}');
@@ -31,11 +32,11 @@ class CanteenServiceInspector {
       }
     } catch (e) {
       debugPrint('Error fetching food items: $e');
-      throw e;
+      rethrow;
     }
   }
 
-  Future<CanteenItemDetail_Inspector> getFoodDetail(int foodId) async {
+  Future<CanteenItemDetailInspector> getFoodDetail(int foodId) async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
@@ -50,14 +51,14 @@ class CanteenServiceInspector {
         final Map<String, dynamic> responseData = json.decode(response.body);
         final Map<String, dynamic> foodData = responseData['data'];
 
-        return CanteenItemDetail_Inspector.fromJson(foodData);
+        return CanteenItemDetailInspector.fromJson(foodData);
       } else {
         debugPrint('Error fetching food detail: ${response.statusCode}');
         throw Exception('Failed to fetch food detail');
       }
     } catch (e) {
       debugPrint('Error fetching food detail: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -80,7 +81,7 @@ class CanteenServiceInspector {
       }
     } catch (e) {
       debugPrint('Error approving food: $e');
-      throw e;
+      rethrow;
     }
   }
 }

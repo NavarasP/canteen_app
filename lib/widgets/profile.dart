@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:canteen_app/Authentication/auth_screen.dart';
 import 'package:canteen_app/services/api/authentication_service.dart';
 
+
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
@@ -63,8 +64,9 @@ class ProfilePage extends StatelessWidget {
 
                         // Navigate to the login screen
                         Navigator.pushReplacement(
+                          // ignore: use_build_context_synchronously
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(builder: (context) => const LoginPage()),
                         );
                       },
                       child: const Text('Logout'),

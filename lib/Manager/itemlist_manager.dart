@@ -6,6 +6,7 @@ class ItemScreenManager extends StatefulWidget {
   const ItemScreenManager({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ItemScreenState createState() => _ItemScreenState();
 }
  
