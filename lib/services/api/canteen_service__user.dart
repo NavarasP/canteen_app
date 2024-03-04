@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import 'package:canteen_app/Models/users_models.dart';
+import 'package:canteen_app/services/Models/users_models.dart';
 import 'package:canteen_app/services/api/authentication_service.dart';
 
 class CanteenServiceUser {
@@ -99,7 +99,6 @@ class CanteenServiceUser {
         Uri.parse('$baseUrl/api/mobile/student/order/detail/$orderId'),
         headers: {
           'Authorization': 'Token $authToken',
-          "Access-Control-Allow-Origin": "*",
         },
       );
 
