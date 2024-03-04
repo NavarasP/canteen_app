@@ -35,20 +35,3 @@ class Course {
 
 
 
-// class Order {
-//   final String orderId;
-//   final String user;
-//   final List<CanteenItem> items;
-//   final DateTime orderDate;
-//   final double totalAmount;
-
-//   Order({
-//     required this.orderId,
-//     required this.user,
-//     required this.items,
-//     required this.orderDate,
-//     required this.totalAmount,
-//   });
-// }
-
-
