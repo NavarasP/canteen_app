@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/services/widgets/profile.dart';
-import 'package:canteen_app/services/color_schemes.g.dart';
+import 'package:canteen_app/Services/widgets/profile.dart';
+import 'package:canteen_app/Services/color_schemes.g.dart';
 import 'package:canteen_app/Inspectors/itemlist_inspector.dart';
 
 class InspectorScreen extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/services/widgets/profile.dart';
+import 'package:canteen_app/Services/widgets/profile.dart';
 import 'package:canteen_app/Manager/itemlist_manager.dart';
 
 

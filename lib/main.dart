@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/services/color_schemes.g.dart';
+import 'package:canteen_app/Services/color_schemes.g.dart';
 import 'package:canteen_app/Authentication/auth_screen.dart';
 
 void main() async {

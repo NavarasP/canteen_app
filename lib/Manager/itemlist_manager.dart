@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/services/Models/manager_model.dart';
-import 'package:canteen_app/services/api/canteen_service__manager.dart';
+import 'package:canteen_app/Services/Models/manager_model.dart';
+import 'package:canteen_app/Services/api/canteen_service__manager.dart';
 
 class ItemScreenManager extends StatefulWidget {
   const ItemScreenManager({super.key});

@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import 'package:canteen_app/services/Models/users_models.dart';
-import 'package:canteen_app/services/api/authentication_service.dart';
+import 'package:canteen_app/Services/Models/users_models.dart';
+import 'package:canteen_app/Services/api/authentication_service.dart';
 
 class CanteenServiceUser {
   final String baseUrl = 'http://127.0.0.1:8000';

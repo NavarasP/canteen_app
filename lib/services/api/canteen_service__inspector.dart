@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import 'package:canteen_app/services/Models/inspector_models.dart';
-import 'package:canteen_app/services/api/authentication_service.dart';
+import 'package:canteen_app/Services/Models/inspector_models.dart';
+import 'package:canteen_app/Services/api/authentication_service.dart';
 
 
 class CanteenServiceInspector {

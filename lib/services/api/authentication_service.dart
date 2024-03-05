@@ -131,8 +131,6 @@ class AuthenticationService {
         debugPrint('Signed up successfully!');
       } else {
         debugPrint('Error signing up: ${response.statusCode}');
-        // Handle signup errors here
-        // You might want to throw an exception or return an error message
       }
     } catch (e) {
       debugPrint('Error signing up: $e');

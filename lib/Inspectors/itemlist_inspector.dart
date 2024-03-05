@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/services/Models/inspector_models.dart';
-import 'package:canteen_app/services/api/canteen_service__inspector.dart';
+import 'package:canteen_app/Services/Models/inspector_models.dart';
+import 'package:canteen_app/Services/api/canteen_service__inspector.dart';
 
 class InspectorItemScreen extends StatefulWidget {
   const InspectorItemScreen({super.key});

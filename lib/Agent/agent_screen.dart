@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:canteen_app/Users/cart.dart';
 import 'package:canteen_app/Users/orders.dart';
 import 'package:canteen_app/Users/itemlist_user.dart';
-import 'package:canteen_app/services/color_schemes.g.dart';
+import 'package:canteen_app/Services/color_schemes.g.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
