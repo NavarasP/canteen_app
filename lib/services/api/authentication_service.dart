@@ -11,23 +11,25 @@ class AuthenticationService {
   static const String authTokenKey = 'authToken';
 
   Future<void> saveUserDetails(
-      String authToken, String username, String name, String userType) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('authToken', authToken);
-    prefs.setString('username', username);
-    prefs.setString('name', name);
-    prefs.setString('userType', userType);
-  }
+    String token, String email, String role, String agentId) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString('authToken', token);
+  prefs.setString('email', email);
+  prefs.setString('role', role);
+  prefs.setString('agentId', agentId);
+}
+
 
   static Future<Map<String, String?>> getUserDetails() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return {
-      'authToken': prefs.getString('authToken'),
-      'username': prefs.getString('username'),
-      'name': prefs.getString('name'),
-      'userType': prefs.getString('userType'),
-    };
-  }
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return {
+    'authToken': prefs.getString('authToken'),
+    'email': prefs.getString('email'),
+    'role': prefs.getString('role'),
+    'agentId': prefs.getString('agentId'),
+  };
+}
+
 
   // Retrieve the auth token from SharedPreferences
   static Future<String?> getAuthToken() async {
@@ -42,36 +44,37 @@ class AuthenticationService {
   }
 
   Future<void> signIn(String email, String password) async {
-    try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/api/mobile/login/'),
-        body: {'username': email, 'password': password},
-      );
+  try {
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/mobile/login/'),
+      body: {'username': email, 'password': password},
+    );
 
-      if (response.statusCode == 201) {
-        // Parse the response JSON
-        final Map<String, dynamic> responseData = json.decode(response.body);
+    if (response.statusCode == 200) {
+      // Parse the response JSON
+      final Map<String, dynamic> responseData = json.decode(response.body);
 
-        // Extract the auth token from the response
-        final String authToken = responseData['data']['auth_token'];
-        final String username = responseData['data']['username'];
-        final String name = responseData['data']['name'];
-        final String userType = responseData['data']['type'];
+      // Extract the token and other user details from the response
+      final String token = responseData['token'];
+      final Map<String, dynamic> userData = responseData['data'];
+      final String role = userData['role'];
+      final String agentId = userData['agent']; // Assuming agentId is returned
 
-        // Save the auth token
-        await saveUserDetails(authToken, username, name, userType);
+      // Save user details
+      await saveUserDetails(token, email, role, agentId);
 
-        debugPrint('Signed in successfully!');
-      } else {
-        debugPrint('Error signing in: ${response.statusCode}');
-        // Handle sign-in errors here
-      }
-    } catch (e) {
-      debugPrint('Error signing in: $e');
+      debugPrint('Signed in successfully!');
+    } else {
+      debugPrint('Error signing in: ${response.statusCode}');
       // Handle sign-in errors here
-      rethrow; // Rethrow the exception for the caller to handle
     }
+  } catch (e) {
+    debugPrint('Error signing in: $e');
+    // Handle sign-in errors here
+    rethrow; // Rethrow the exception for the caller to handle
   }
+}
+
 
   Future<void> signOut() async {
     try {
