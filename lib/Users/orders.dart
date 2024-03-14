@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:canteen_app/Users/order_detail.dart';
 import 'package:canteen_app/Services/Models/users_models.dart';
-import 'package:canteen_app/Services/api/canteen_service__user.dart';
+import 'package:canteen_app/Services/api/canteen_service_user.dart';
 
 class OrderPage extends StatefulWidget {
-  const OrderPage({Key? key}) : super(key: key);
+  const OrderPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _OrderPageState createState() => _OrderPageState();
 }
 

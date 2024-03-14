@@ -40,7 +40,7 @@ class _UserScreenState extends State<UserScreen> {
             label: 'Cart',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.gif_box),
+            icon: Icon(Icons.shopping_bag),
             label: 'Order',
           ),
           BottomNavigationBarItem(
