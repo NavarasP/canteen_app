@@ -88,21 +88,25 @@ class _OrderDetailManagerPageState extends State<OrderDetailManagerPage> {
                   Wrap(
                           spacing: 8.0,
                           children: [
-                            if (orderDetail.status == 'Order Placed')
-                              ElevatedButton(
-                                onPressed: () => changeOrderStatus(widget.orderId, 'APPROVED'),
-                                child: Text('Approve'),
-                              ),
+                             if (orderDetail.status == 'Order Placed')
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () => changeOrderStatus(widget.orderId, 'APPROVED'),
+                                        child: Text('Accept'),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () => changeOrderStatus(widget.orderId, 'REJECTED'),
+                                        child: Text('Reject'),
+                                      ),
+                                    ],
+                                  ),
                             if (orderDetail.status == 'Order Approved')
                               ElevatedButton(
                                 onPressed: () => changeOrderStatus(widget.orderId, 'READY'),
                                 child: Text('Order Ready'),
                               ),
-                            // if (orderDetail.status == 'Order Ready To be Delivered')
-                            //   ElevatedButton(
-                            //     onPressed: () => changeOrderStatus(widget.orderId, 'READY'),
-                            //     child: Text('Ready'),
-                            //   ),
                           ],
                         ),
 
