@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/Services/Models/inspector_models.dart';
+import 'package:canteen_app/Services/api_models/inspector_model.dart';
 import 'package:canteen_app/Services/api/canteen_service_inspector.dart';
 
 class InspectorItemScreen extends StatefulWidget {

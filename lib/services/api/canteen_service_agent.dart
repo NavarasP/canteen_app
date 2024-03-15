@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import 'package:canteen_app/Services/Models/agent_model.dart';
+import 'package:canteen_app/Services/api_models/agent_model.dart';
 import 'package:canteen_app/Services/api/authentication_service.dart';
 
 

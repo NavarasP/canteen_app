@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import 'package:canteen_app/Services/Models/users_models.dart';
+import 'package:canteen_app/Services/api_models/users_models.dart';
 import 'package:canteen_app/Services/api/authentication_service.dart';
 
 class CanteenServiceUser {

@@ -82,25 +82,7 @@ class FoodDetailManager {
 
 
 
-// class OrderStatusChangeResponse {
-//   final bool result;
-//   final String msg;
-//   final dynamic data;
 
-//   OrderStatusChangeResponse({
-//     required this.result,
-//     required this.msg,
-//     required this.data,
-//   });
-
-//   factory OrderStatusChangeResponse.fromJson(Map<String, dynamic> json) {
-//     return OrderStatusChangeResponse(
-//       result: json['result'],
-//       msg: json['msg'],
-//       data: json['data'],
-//     );
-//   }
-// }
 
 class OrderListManager {
   final int id;
@@ -149,18 +131,22 @@ class OrderDetailManager {
     required this.items,
   });
 
-  factory OrderDetailManager.fromJson(Map<String, dynamic> json) {
-    return OrderDetailManager(
-      orderId: json['order_id'],
-      totalPrice: json['total_price'].toDouble(),
-      totalQuantity: json['total_quantity'],
-      deliveryTime: json['delivery_time'],
-      status: json['status'],
-      remarks: json['remarks'],
-      student: json['student'],
-      items: List<OrderItem>.from(json['items'].map((item) => OrderItem.fromJson(item))),
-    );
-  }
+factory OrderDetailManager.fromJson(Map<String, dynamic> json) {
+  return OrderDetailManager(
+    orderId: json['order_id'] ?? '',
+    totalPrice: (json['total_price'] as num?)?.toDouble() ?? 0.0,
+    totalQuantity: json['total_quantity'] ?? 0,
+    deliveryTime: json['delivery_time'] ?? '',
+    status: json['status'] ?? '',
+    remarks: json['remarks'] ?? '',
+    student: json['student'] ?? '',
+    items: (json['items'] as List<dynamic>?)
+        ?.map((item) => OrderItem.fromJson(item))
+        .toList() ??
+        [],
+  );
+}
+
 }
 
 
@@ -182,14 +168,15 @@ class OrderItem {
     this.imageUrl,
   });
 
-  factory OrderItem.fromJson(Map<String, dynamic> json) {
-    return OrderItem(
-      id: json['id'],
-      foodId: json['food_id'],
-      foodName: json['food_name'],
-      quantity: json['quantity'],
-      price: json['price'].toDouble(),
-      imageUrl: json['image_url'],
-    );
-  }
+factory OrderItem.fromJson(Map<String, dynamic> json) {
+  return OrderItem(
+    id: json['id'] ?? 0,
+    foodId: json['food_id'] ?? '',
+    foodName: json['food_name'] ?? '',
+    quantity: json['quantity'] ?? 0,
+    price: (json['price'] as num?)?.toDouble() ?? 0.0,
+    imageUrl: json['image_url'] ?? '',
+  );
+}
+
 }

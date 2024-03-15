@@ -2,7 +2,7 @@
 class CanteenItemInspector {
   final int id;
   final String name;
-  final int price;
+  final double price;
   final int quantity;
   final String? imageUrl;
   final bool isApproved;
@@ -31,7 +31,7 @@ class CanteenItemInspector {
 class CanteenItemDetailInspector {
   final int id;
   final String name;
-  final int price;
+  final double price;
   final int quantity;
   final bool isApproved;
   final int categoryId;

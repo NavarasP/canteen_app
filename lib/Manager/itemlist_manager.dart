@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '../Services/api_models/general_models.dart';
-import 'package:canteen_app/Services/Models/manager_model.dart';
+import '../Services/api_models/general_model.dart';
 import 'package:canteen_app/Services/api/genaral_api_service.dart';
+import 'package:canteen_app/Services/api_models/manager_model.dart';
 import 'package:canteen_app/Services/api/canteen_service_manager.dart';
 
 class ItemScreenManager extends StatefulWidget {

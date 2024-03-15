@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import 'package:canteen_app/Services/Models/manager_model.dart';
+import 'package:canteen_app/Services/api_models/manager_model.dart';
 import 'package:canteen_app/Services/api/authentication_service.dart';
 
 class CanteenServiceManager {
@@ -196,7 +196,7 @@ class CanteenServiceManager {
     }
   }
 
-  Future<OrderStatusChangeResponse> changeOrderStatus(
+ Future<String> changeOrderStatus(
       String orderId, String status, String remarks) async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
@@ -216,7 +216,7 @@ class CanteenServiceManager {
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-        return OrderStatusChangeResponse.fromJson(responseData);
+        return responseData['msg'] ?? 'Order status changed successfully';
       } else {
         debugPrint('Error changing order status: ${response.statusCode}');
         throw Exception('Failed to change order status');
@@ -226,6 +226,10 @@ class CanteenServiceManager {
       rethrow;
     }
   }
+
+
+
+  
 Future<List<OrderListManager>> getOrderListManager() async {
   try {
     final String? authToken = await AuthenticationService.getAuthToken();
@@ -255,7 +259,7 @@ Future<List<OrderListManager>> getOrderListManager() async {
 }
 
 
-  Future<OrderDetailManager> getOrderDetailManager(String orderId) async {
+Future<OrderDetailManager> getOrderDetailManager(String orderId) async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
@@ -270,7 +274,11 @@ Future<List<OrderListManager>> getOrderListManager() async {
         final responseData = json.decode(response.body);
         if (responseData['result'] == true) {
           final orderData = responseData['data'];
-          return OrderDetailManager.fromJson(orderData);
+          if (orderData != null && orderData is Map<String, dynamic>) {
+            return OrderDetailManager.fromJson(orderData);
+          } else {
+            throw Exception('Invalid order detail data');
+          }
         } else {
           throw Exception(responseData['msg']);
         }
@@ -283,4 +291,9 @@ Future<List<OrderListManager>> getOrderListManager() async {
       rethrow;
     }
   }
+
+
+
+
+
 }

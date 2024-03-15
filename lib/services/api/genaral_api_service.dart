@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import 'package:canteen_app/Services/api_models/general_models.dart';
+import 'package:canteen_app/Services/api_models/general_model.dart';
 import 'package:canteen_app/Services/api/authentication_service.dart';
 
 class GenralService {
@@ -76,10 +76,11 @@ Future<List<FoodCategory>> getFoodCategories() async {
       );
 
       if (response.statusCode == 200) {
-        final List<dynamic> responseData = json.decode(response.body)['data'];
-        return responseData
-            .map((data) => OrderStatusDropdown.fromJson(data))
-            .toList();
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        final List<dynamic> statusData = responseData['data'];
+
+
+        return statusData.map((data) => OrderStatusDropdown.fromJson(data)).toList();
       } else {
         debugPrint(
             'Error fetching order status dropdown: ${response.statusCode}');

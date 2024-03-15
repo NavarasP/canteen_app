@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:canteen_app/Services/api/genaral_api_service.dart';
 import 'package:canteen_app/Services/api_models/manager_model.dart';
+import 'package:canteen_app/Services/api_models/general_model.dart';
 import 'package:canteen_app/Services/api/canteen_service_manager.dart';
+
 
 class OrderDetailManagerPage extends StatefulWidget {
   final String orderId;
 
-  const OrderDetailManagerPage({required this.orderId, Key? key})
-      : super(key: key);
+  const OrderDetailManagerPage({required this.orderId, super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _OrderDetailManagerPageState createState() => _OrderDetailManagerPageState();
 }
 
@@ -74,23 +76,26 @@ class _OrderDetailManagerPageState extends State<OrderDetailManagerPage> {
                     },
                   ),
                   const SizedBox(height: 16),
-                  Text('Change Order Status:'),
-                  SizedBox(
-                    width: double.infinity,
-                    child: DropdownButtonFormField<String>(
-                      value: orderDetail.status,
-                      onChanged: (value) {
-                        // Implement logic to update order status
-                      },
-                      items: orderStatusDropdown
-                          .map<DropdownMenuItem<String>>((dropdownItem) {
-                        return DropdownMenuItem<String>(
-                          value: dropdownItem.status,
-                          child: Text(dropdownItem.status),
-                        );
-                      }).toList(),
-                    ),
-                  ),
+                  const Text('Change Order Status:'),
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   child: DropdownButtonFormField<String>(
+                  //     value: orderDetail.status,
+                  //     onChanged: (value) {
+                  //       // Implement logic to update order status
+                  //     },
+                  //     items: orderStatusDropdown
+                  //           .map<DropdownMenuItem<String>>((dropdownItem) {
+                  //             return DropdownMenuItem<String>(
+                  //               value: dropdownItem.value,
+                  //               child: Text(dropdownItem.value),
+                  //             );
+                  //           })
+                  //           .toSet() // Convert to a set to ensure uniqueness
+                  //           .toList(), // Convert back to a list
+
+                  //   ),
+                  // ),
                 ],
               ),
             );

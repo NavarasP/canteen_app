@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:canteen_app/Manager/orders.dart';
 import 'package:canteen_app/Services/widgets/profile.dart';
 import 'package:canteen_app/Manager/itemlist_manager.dart';
-
 
 class CanteenTeamScreen extends StatefulWidget {
   const CanteenTeamScreen({super.key});
@@ -34,6 +34,10 @@ class _CanteenTeamScreenState extends State<CanteenTeamScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_bag),
+            label: 'Order',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
           ),
@@ -47,6 +51,8 @@ class _CanteenTeamScreenState extends State<CanteenTeamScreen> {
       case 0:
         return AppBar(title: const Text('Home'));
       case 1:
+        return AppBar(title: const Text('Order'));
+      case 2:
         return AppBar(title: const Text('Profile'));
       default:
         return AppBar(); // Default app bar for other cases
@@ -58,6 +64,8 @@ class _CanteenTeamScreenState extends State<CanteenTeamScreen> {
       case 0:
         return const ItemScreenManager();
       case 1:
+        return const OrderPageManager();
+      case 2:
         return const ProfilePage();
       default:
         return Container();
