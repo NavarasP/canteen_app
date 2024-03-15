@@ -6,8 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class AuthenticationService {
-  // final String baseUrl = 'http://127.0.0.1:8000';
-  final String baseUrl = PrimeUrl;
+
 
   static const String authTokenKey = 'authToken';
 
@@ -45,7 +44,7 @@ class AuthenticationService {
   Future<void> signIn(String email, String password) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/api/mobile/login/'),
+        Uri.parse('$PrimeUrl/api/mobile/login/'),
         body: {'username': email, 'password': password},
       );
 
@@ -85,7 +84,7 @@ class AuthenticationService {
       // Passing empty strings for user details
 
       final response = await http.post(
-        Uri.parse('$baseUrl/api/mobile/logout/'),
+        Uri.parse('$PrimeUrl/api/mobile/logout/'),
         headers: {
           'Authorization':
               'Token $authToken', // Include the auth token in the headers
@@ -111,7 +110,7 @@ class AuthenticationService {
       String confirmPwd, String department) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/api/mobile/student/register/'),
+        Uri.parse('$PrimeUrl/api/mobile/student/register/'),
         body: {
           'mobile': mobile,
           'name': name,

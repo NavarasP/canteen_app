@@ -1,12 +1,12 @@
 import 'dart:convert';
+import 'variable.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:canteen_app/Services/api_models/users_models.dart';
 import 'package:canteen_app/Services/api/authentication_service.dart';
 
 class CanteenServiceUser {
-  // final String baseUrl = 'http://127.0.0.1:8000';
-  final String baseUrl = 'http://192.168.1.4:8000';
+
 
 
   Future<List<CanteenItemStudent>> getFoodListUser() async {
@@ -14,7 +14,7 @@ class CanteenServiceUser {
       final String? authToken = await AuthenticationService.getAuthToken();
 
       final response = await http.get(
-        Uri.parse('$baseUrl/api/mobile/student/food/list/'),
+        Uri.parse('$PrimeUrl/api/mobile/student/food/list/'),
         headers: {
           'Authorization': 'Token $authToken',
         },
@@ -43,7 +43,7 @@ class CanteenServiceUser {
       final String? authToken = await AuthenticationService.getAuthToken();
 
       final response = await http.post(
-        Uri.parse('$baseUrl/api/mobile/student/order/'),
+        Uri.parse('$PrimeUrl/api/mobile/student/order/'),
         headers: {
           'Authorization': 'Token $authToken',
         },
@@ -70,7 +70,7 @@ class CanteenServiceUser {
       final String? authToken = await AuthenticationService.getAuthToken();
 
       final response = await http.get(
-        Uri.parse('$baseUrl/api/mobile/student/order/list/'),
+        Uri.parse('$PrimeUrl/api/mobile/student/order/list/'),
         headers: {
           'Authorization': 'Token $authToken',
         },
@@ -96,7 +96,7 @@ class CanteenServiceUser {
       final String? authToken = await AuthenticationService.getAuthToken();
 
       final response = await http.get(
-        Uri.parse('$baseUrl/api/mobile/student/order/detail/$orderId'),
+        Uri.parse('$PrimeUrl/api/mobile/student/order/detail/$orderId'),
         headers: {
           'Authorization': 'Token $authToken',
         },

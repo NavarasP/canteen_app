@@ -1,20 +1,20 @@
 import 'dart:io';
 import 'dart:convert';
+import 'variable.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:canteen_app/Services/api_models/manager_model.dart';
 import 'package:canteen_app/Services/api/authentication_service.dart';
 
 class CanteenServiceManager {
-  // final String baseUrl = 'http://127.0.0.1:8000';
-  final String baseUrl = 'http://192.168.1.4:8000';
+
 
   Future<List<CanteenItemManager>> getFoodListManager() async {
     try {
       final authToken = await AuthenticationService.getAuthToken();
 
       final response = await http.get(
-        Uri.parse('$baseUrl/api/mobile/canteen/food/list/'),
+        Uri.parse('$PrimeUrl/api/mobile/canteen/food/list/'),
         headers: {
           'Authorization': 'Token $authToken',
         },
@@ -43,7 +43,7 @@ class CanteenServiceManager {
     // Prepare the multipart request
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('$baseUrl/api/mobile/canteen/food/create/'),
+      Uri.parse('$PrimeUrl/api/mobile/canteen/food/create/'),
     );
 
     request.headers['Authorization'] = 'Token $authToken';
@@ -68,20 +68,20 @@ class CanteenServiceManager {
       if (response.statusCode == 200) {
         debugPrint('Item created successfully');
       } else {
-        debugPrint('Failed to create item. Status code: ${response.statusCode}');
+        debugPrint(
+            'Failed to create item. Status code: ${response.statusCode}');
       }
     } catch (e) {
       debugPrint('Error creating item: $e');
     }
   }
 
-
   Future<void> updateFood(int foodId, Map<String, dynamic> foodData) async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
       final response = await http.post(
-        Uri.parse('$baseUrl/api/mobile/canteen/food/update/$foodId/'),
+        Uri.parse('$PrimeUrl/api/mobile/canteen/food/update/$foodId/'),
         headers: {
           'Authorization': 'Token $authToken',
         },
@@ -105,7 +105,7 @@ class CanteenServiceManager {
       final String? authToken = await AuthenticationService.getAuthToken();
 
       final response = await http.post(
-        Uri.parse('$baseUrl/api/mobile/canteen/food/delete/$foodId/'),
+        Uri.parse('$PrimeUrl/api/mobile/canteen/food/delete/$foodId/'),
         headers: {
           'Authorization': 'Token $authToken',
         },
@@ -128,7 +128,7 @@ class CanteenServiceManager {
       final String? authToken = await AuthenticationService.getAuthToken();
 
       final response = await http.get(
-        Uri.parse('$baseUrl/api/mobile/canteen/food/detail/$foodId/'),
+        Uri.parse('$PrimeUrl/api/mobile/canteen/food/detail/$foodId/'),
         headers: {
           'Authorization': 'Token $authToken',
         },
@@ -153,7 +153,7 @@ class CanteenServiceManager {
 
       final response = await http.post(
         Uri.parse(
-            '$baseUrl/api/mobile/canteen/food/mark-as-todays-special/$foodId/'),
+            '$PrimeUrl/api/mobile/canteen/food/mark-as-todays-special/$foodId/'),
         headers: {
           'Authorization': 'Token $authToken',
         },
@@ -172,8 +172,7 @@ class CanteenServiceManager {
     }
   }
 
- Future<String> changeOrderStatus(
-      String orderId, String status) async {
+  Future<String> changeOrderStatus(String orderId, String status) async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
       final Map<String, dynamic> requestData = {
@@ -182,7 +181,7 @@ class CanteenServiceManager {
       };
 
       final response = await http.post(
-        Uri.parse('$baseUrl/api/mobile/canteen/order/status/change/$orderId/'),
+        Uri.parse('$PrimeUrl/api/mobile/canteen/order/status/change/$orderId/'),
         headers: {
           'Authorization': 'Token $authToken',
           'Content-Type': 'application/json',
@@ -203,44 +202,40 @@ class CanteenServiceManager {
     }
   }
 
-
-
-  
-Future<List<OrderListManager>> getOrderListManager() async {
-  try {
-    final String? authToken = await AuthenticationService.getAuthToken();
-
-    final response = await http.get(
-      Uri.parse('$baseUrl/api/mobile/canteen/order/list/'),
-      headers: {
-        'Authorization': 'Token $authToken',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> responseData = json.decode(response.body);
-        final List<dynamic> ordersData = responseData['data'];
-
-        return ordersData.map((data) => OrderListManager.fromJson(data)).toList();
-
-
-    } else {
-      debugPrint('Error fetching order list: ${response.statusCode}');
-      throw Exception('Failed to fetch order list');
-    }
-  } catch (e) {
-    debugPrint('Error fetching order list: $e');
-    rethrow; // Rethrow the exception to propagate it further
-  }
-}
-
-
-Future<OrderDetailManager> getOrderDetailManager(String orderId) async {
+  Future<List<OrderListManager>> getOrderListManager() async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
       final response = await http.get(
-        Uri.parse('$baseUrl/api/mobile/canteen/order/detail/$orderId/'),
+        Uri.parse('$PrimeUrl/api/mobile/canteen/order/list/'),
+        headers: {
+          'Authorization': 'Token $authToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        final List<dynamic> ordersData = responseData['data'];
+
+        return ordersData
+            .map((data) => OrderListManager.fromJson(data))
+            .toList();
+      } else {
+        debugPrint('Error fetching order list: ${response.statusCode}');
+        throw Exception('Failed to fetch order list');
+      }
+    } catch (e) {
+      debugPrint('Error fetching order list: $e');
+      rethrow; // Rethrow the exception to propagate it further
+    }
+  }
+
+  Future<OrderDetailManager> getOrderDetailManager(String orderId) async {
+    try {
+      final String? authToken = await AuthenticationService.getAuthToken();
+
+      final response = await http.get(
+        Uri.parse('$PrimeUrl/api/mobile/canteen/order/detail/$orderId/'),
         headers: {
           'Authorization': 'Token $authToken',
         },
@@ -267,9 +262,4 @@ Future<OrderDetailManager> getOrderDetailManager(String orderId) async {
       rethrow;
     }
   }
-
-
-
-
-
 }

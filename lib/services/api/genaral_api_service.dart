@@ -1,12 +1,11 @@
 import 'dart:convert';
+import 'variable.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:canteen_app/Services/api_models/general_model.dart';
 import 'package:canteen_app/Services/api/authentication_service.dart';
 
 class GenralService {
-  // final String baseUrl = 'http://127.0.0.1:8000';
-  final String baseUrl = 'http://192.168.1.4:8000';
 
 
 Future<List<FoodCategory>> getFoodCategories() async {
@@ -14,7 +13,7 @@ Future<List<FoodCategory>> getFoodCategories() async {
     final String? authToken = await AuthenticationService.getAuthToken();
 
     final response = await http.get(
-      Uri.parse('$baseUrl/api/mobile/canteen/food/category/dropdown/'),
+      Uri.parse('$PrimeUrl/api/mobile/canteen/food/category/dropdown/'),
       headers: {
         'Authorization': 'Token $authToken',
       },
@@ -44,7 +43,7 @@ Future<List<FoodCategory>> getFoodCategories() async {
   Future<List<Course>> getCourses() async {
     try {
       final response = await http.get(
-        Uri.parse('$baseUrl/api/mobile/student/department/dropdown/'),
+        Uri.parse('$PrimeUrl/api/mobile/student/department/dropdown/'),
       );
 
       if (response.statusCode == 200) {
@@ -69,7 +68,7 @@ Future<List<FoodCategory>> getFoodCategories() async {
       final String? authToken = await AuthenticationService.getAuthToken();
 
       final response = await http.get(
-        Uri.parse('$baseUrl/api/mobile/canteen/order/status/dropdown/'),
+        Uri.parse('$PrimeUrl/api/mobile/canteen/order/status/dropdown/'),
         headers: {
           'Authorization': 'Token $authToken',
         },
