@@ -49,6 +49,7 @@ class _LoginFormState extends State<LoginForm> {
           _navigateToReplacement(context, const CanteenTeamScreen());
           
         case 'DELIVERY':
+          // ignore: use_build_context_synchronously
           _navigateToReplacement(context, const AgentScreen());
           break;
 

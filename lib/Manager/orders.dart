@@ -4,9 +4,10 @@ import 'package:canteen_app/Services/api_models/manager_model.dart';
 import 'package:canteen_app/Services/api/canteen_service_manager.dart';
 
 class OrderPageManager extends StatefulWidget {
-  const OrderPageManager({Key? key}) : super(key: key);
+  const OrderPageManager({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _OrderPageManagerState createState() => _OrderPageManagerState();
 }
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/Services/api/genaral_api_service.dart';
 import 'package:canteen_app/Services/api_models/manager_model.dart';
 import 'package:canteen_app/Services/api_models/general_model.dart';
 import 'package:canteen_app/Services/api/canteen_service_manager.dart';
@@ -7,9 +6,10 @@ import 'package:canteen_app/Services/api/canteen_service_manager.dart';
 class OrderDetailManagerPage extends StatefulWidget {
   final String orderId;
 
-  const OrderDetailManagerPage({required this.orderId, Key? key}) : super(key: key);
+  const OrderDetailManagerPage({required this.orderId, super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _OrderDetailManagerPageState createState() => _OrderDetailManagerPageState();
 }
 
@@ -21,16 +21,13 @@ class _OrderDetailManagerPageState extends State<OrderDetailManagerPage> {
   void initState() {
     super.initState();
     _orderDetailFuture = getOrderDetail(widget.orderId);
-    _orderStatusDropdownFuture = getOrderStatusDropdown();
   }
 
   Future<OrderDetailManager> getOrderDetail(String orderId) async {
     return CanteenServiceManager().getOrderDetailManager(orderId);
   }
 
-  Future<List<OrderStatusDropdown>> getOrderStatusDropdown() async {
-    return GenralService().getOrderStatusDropdown();
-  }
+
 
   Future<void> changeOrderStatus(String orderId, String status) async {
     try {
@@ -39,7 +36,7 @@ class _OrderDetailManagerPageState extends State<OrderDetailManagerPage> {
         _orderDetailFuture = getOrderDetail(orderId);
       });
     } catch (e) {
-      print('Error changing order status: $e');
+      debugPrint('Error changing order status: $e');
     }
   }
 
@@ -53,14 +50,13 @@ class _OrderDetailManagerPageState extends State<OrderDetailManagerPage> {
         future: Future.wait([_orderDetailFuture, _orderStatusDropdownFuture]),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             final orderDetail = snapshot.data![0] as OrderDetailManager;
-            final orderStatusDropdown = snapshot.data![1] as List<OrderStatusDropdown>;
             return SingleChildScrollView(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -94,23 +90,21 @@ class _OrderDetailManagerPageState extends State<OrderDetailManagerPage> {
                                     children: [
                                       ElevatedButton(
                                         onPressed: () => changeOrderStatus(widget.orderId, 'APPROVED'),
-                                        child: Text('Accept'),
+                                        child: const Text('Accept'),
                                       ),
                                       ElevatedButton(
                                         onPressed: () => changeOrderStatus(widget.orderId, 'REJECTED'),
-                                        child: Text('Reject'),
+                                        child: const Text('Reject'),
                                       ),
                                     ],
                                   ),
                             if (orderDetail.status == 'Order Approved')
                               ElevatedButton(
                                 onPressed: () => changeOrderStatus(widget.orderId, 'READY'),
-                                child: Text('Order Ready'),
+                                child: const Text('Order Ready'),
                               ),
                           ],
                         ),
-
-
                 ],
               ),
             );

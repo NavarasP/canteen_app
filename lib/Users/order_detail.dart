@@ -5,7 +5,7 @@ import 'package:canteen_app/Services/api/canteen_service_user.dart';
 class OrderDetailPage extends StatelessWidget {
   final String orderId;
 
-  const OrderDetailPage({required this.orderId, Key? key}) : super(key: key);
+  const OrderDetailPage({required this.orderId, super.key});
 
   Future<OrderDetail> getOrderDetail(String orderId) async {
     return CanteenServiceUser().getOrderDetailForStudent(orderId);
@@ -21,13 +21,13 @@ class OrderDetailPage extends StatelessWidget {
         future: getOrderDetail(orderId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             final orderDetail = snapshot.data!;
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -66,38 +66,15 @@ class CanteenServiceManager {
     try {
       var response = await request.send();
       if (response.statusCode == 200) {
-        print('Item created successfully');
+        debugPrint('Item created successfully');
       } else {
-        print('Failed to create item. Status code: ${response.statusCode}');
+        debugPrint('Failed to create item. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error creating item: $e');
+      debugPrint('Error creating item: $e');
     }
   }
 
-  // Future<void> createFood(Map<String, dynamic> foodData) async {
-  //   try {
-  //     final String? authToken = await AuthenticationService.getAuthToken();
-
-  //     final response = await http.post(
-  //       Uri.parse('$baseUrl/api/mobile/canteen/food/create/'),
-  //       headers: {
-  //         'Authorization': 'Token $authToken',
-  //       },
-  //       body: foodData,
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       debugPrint('Food created successfully!');
-  //     } else {
-  //       debugPrint('Error creating food: ${response.statusCode}');
-  //       throw Exception('Failed to create food');
-  //     }
-  //   } catch (e) {
-  //     debugPrint('Error creating food: $e');
-  //     rethrow;
-  //   }
-  // }
 
   Future<void> updateFood(int foodId, Map<String, dynamic> foodData) async {
     try {

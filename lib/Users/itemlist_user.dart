@@ -4,9 +4,10 @@ import 'package:canteen_app/Services/api_models/users_models.dart';
 import 'package:canteen_app/Services/api/canteen_service_user.dart';
 
 class ItemScreenUsers extends StatefulWidget {
-  const ItemScreenUsers({Key? key}) : super(key: key);
+  const ItemScreenUsers({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ItemScreenUsersState createState() => _ItemScreenUsersState();
 }
 
@@ -113,6 +114,7 @@ class _ItemScreenUsersState extends State<ItemScreenUsers>
     await CartService.updateCartItems(cartItems);
 
     showDialog(
+      // ignore: use_build_context_synchronously
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(

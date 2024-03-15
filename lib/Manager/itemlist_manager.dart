@@ -7,9 +7,10 @@ import 'package:canteen_app/Services/api_models/manager_model.dart';
 import 'package:canteen_app/Services/api/canteen_service_manager.dart';
 
 class ItemScreenManager extends StatefulWidget {
-  const ItemScreenManager({Key? key}) : super(key: key);
+  const ItemScreenManager({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ItemScreenState createState() => _ItemScreenState();
 }
 
@@ -104,7 +105,7 @@ class _ItemScreenState extends State<ItemScreenManager> {
               const SizedBox(height: 16),
               DropdownButtonFormField(
                 value: selectedCategory,
-                hint: Text('Select Category'),
+                hint: const Text('Select Category'),
                 onChanged: (value) {
                   setState(() {
                     selectedCategory = value;
