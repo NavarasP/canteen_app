@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:canteen_app/Users/order_detail.dart';
-import 'package:canteen_app/Services/Models/users_models.dart';
-import 'package:canteen_app/Services/api/canteen_service_user.dart';
+import 'package:canteen_app/Manager/order_detail.dart';
+import 'package:canteen_app/Services/api_models/manager_model.dart';
+import 'package:canteen_app/Services/api/canteen_service_manager.dart';
 
-class OrderPage extends StatefulWidget {
-  const OrderPage({super.key});
+class OrderPageManager extends StatefulWidget {
+  const OrderPageManager({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _OrderPageState createState() => _OrderPageState();
+  _OrderPageManagerState createState() => _OrderPageManagerState();
 }
 
-class _OrderPageState extends State<OrderPage> {
-  late Future<List<Order>> _orderListFuture;
+class _OrderPageManagerState extends State<OrderPageManager> {
+  late Future<List<OrderListManager>> _orderListFuture;
 
   @override
   void initState() {
@@ -20,27 +19,23 @@ class _OrderPageState extends State<OrderPage> {
     _orderListFuture = getOrderList();
   }
 
-  Future<List<Order>> getOrderList() async {
-    return await CanteenServiceUser().getOrderListForStudent();
+  Future<List<OrderListManager>> getOrderList() async {
+    return await CanteenServiceManager().getOrderListManager();
   }
 
-
-void _showOrderDetail(BuildContext context, Order order) {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => OrderDetailPage(orderId: order.orderId),
-    ),
-  );
-}
-
-
-
+  void _showOrderDetail(BuildContext context, OrderListManager order) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OrderDetailManagerPage(orderId: order.orderId),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<Order>>(
+      body: FutureBuilder<List<OrderListManager>>(
         future: _orderListFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

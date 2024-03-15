@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
@@ -5,9 +6,8 @@ import 'package:canteen_app/Services/Models/manager_model.dart';
 import 'package:canteen_app/Services/api/authentication_service.dart';
 
 class CanteenServiceManager {
-  final String baseUrl = 'http://127.0.0.1:8000';
-    // final String baseUrl = 'https://fn5bbnp1-8000.inc1.devtunnels.ms';
-
+  // final String baseUrl = 'http://127.0.0.1:8000';
+  final String baseUrl = 'http://192.168.1.4:8000';
 
   Future<List<CanteenItemManager>> getFoodListManager() async {
     try {
@@ -37,29 +37,68 @@ class CanteenServiceManager {
     }
   }
 
-  Future<void> createFood(Map<String, dynamic> foodData) async {
+  Future<void> createFood(Map<String, dynamic> foodData, File image) async {
+    final authToken = await AuthenticationService.getAuthToken();
+
+    // Prepare the multipart request
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('$baseUrl/api/mobile/canteen/food/create'),
+    );
+
+    request.headers['Authorization'] = 'Token $authToken';
+
+    // Add form fields (name, price, quantity)
+    request.fields['name'] = foodData['name'];
+    request.fields['price'] = foodData['price'];
+    request.fields['quantity'] = foodData['quantity'];
+
+    request.fields['category_id'] = foodData['category_id'];
+
+    // Add image file
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        'image',
+        image.path,
+      ),
+    );
+
+    // Send the request
     try {
-      final String? authToken = await AuthenticationService.getAuthToken();
-
-      final response = await http.post(
-        Uri.parse('$baseUrl/api/mobile/canteen/food/create/'),
-        headers: {
-          'Authorization': 'Token $authToken',
-        },
-        body: foodData,
-      );
-
+      var response = await request.send();
       if (response.statusCode == 200) {
-        debugPrint('Food created successfully!');
+        print('Item created successfully');
       } else {
-        debugPrint('Error creating food: ${response.statusCode}');
-        throw Exception('Failed to create food');
+        print('Failed to create item. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      debugPrint('Error creating food: $e');
-      rethrow;
+      print('Error creating item: $e');
     }
   }
+
+  // Future<void> createFood(Map<String, dynamic> foodData) async {
+  //   try {
+  //     final String? authToken = await AuthenticationService.getAuthToken();
+
+  //     final response = await http.post(
+  //       Uri.parse('$baseUrl/api/mobile/canteen/food/create/'),
+  //       headers: {
+  //         'Authorization': 'Token $authToken',
+  //       },
+  //       body: foodData,
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       debugPrint('Food created successfully!');
+  //     } else {
+  //       debugPrint('Error creating food: ${response.statusCode}');
+  //       throw Exception('Failed to create food');
+  //     }
+  //   } catch (e) {
+  //     debugPrint('Error creating food: $e');
+  //     rethrow;
+  //   }
+  // }
 
   Future<void> updateFood(int foodId, Map<String, dynamic> foodData) async {
     try {
@@ -109,36 +148,36 @@ class CanteenServiceManager {
   }
 
   Future<FoodDetailManager> getFoodDetailManager(int foodId) async {
-  try {
-    final String? authToken = await AuthenticationService.getAuthToken();
+    try {
+      final String? authToken = await AuthenticationService.getAuthToken();
 
-    final response = await http.get(
-      Uri.parse('$baseUrl/api/mobile/canteen/food/detail/$foodId/'),
-      headers: {
-        'Authorization': 'Token $authToken',
-      },
-    );
+      final response = await http.get(
+        Uri.parse('$baseUrl/api/mobile/canteen/food/detail/$foodId/'),
+        headers: {
+          'Authorization': 'Token $authToken',
+        },
+      );
 
-    if (response.statusCode == 200) {
-      final responseData = json.decode(response.body)['data'];
-      return FoodDetailManager.fromJson(responseData);
-    } else {
-      debugPrint('Error fetching food detail: ${response.statusCode}');
-      throw Exception('Failed to fetch food detail');
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body)['data'];
+        return FoodDetailManager.fromJson(responseData);
+      } else {
+        debugPrint('Error fetching food detail: ${response.statusCode}');
+        throw Exception('Failed to fetch food detail');
+      }
+    } catch (e) {
+      debugPrint('Error fetching food detail: $e');
+      rethrow;
     }
-  } catch (e) {
-    debugPrint('Error fetching food detail: $e');
-    rethrow;
   }
-}
-
 
   Future<void> markAsTodaysSpecial(int foodId) async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
 
       final response = await http.post(
-        Uri.parse('$baseUrl/api/mobile/canteen/food/mark-as-todays-special/$foodId/'),
+        Uri.parse(
+            '$baseUrl/api/mobile/canteen/food/mark-as-todays-special/$foodId/'),
         headers: {
           'Authorization': 'Token $authToken',
         },
@@ -147,7 +186,8 @@ class CanteenServiceManager {
       if (response.statusCode == 200) {
         debugPrint('Food marked as today\'s special successfully!');
       } else {
-        debugPrint('Error marking food as today\'s special: ${response.statusCode}');
+        debugPrint(
+            'Error marking food as today\'s special: ${response.statusCode}');
         throw Exception('Failed to mark food as today\'s special');
       }
     } catch (e) {
@@ -156,31 +196,8 @@ class CanteenServiceManager {
     }
   }
 
-  Future<List<OrderStatusDropdown>> getOrderStatusDropdown() async {
-    try {
-      final String? authToken = await AuthenticationService.getAuthToken();
-
-      final response = await http.get(
-        Uri.parse('$baseUrl/api/mobile/canteen/order/status/dropdown/'),
-        headers: {
-          'Authorization': 'Token $authToken',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final List<dynamic> responseData = json.decode(response.body)['data'];
-        return responseData.map((data) => OrderStatusDropdown.fromJson(data)).toList();
-      } else {
-        debugPrint('Error fetching order status dropdown: ${response.statusCode}');
-        throw Exception('Failed to fetch order status dropdown');
-      }
-    } catch (e) {
-      debugPrint('Error fetching order status dropdown: $e');
-      rethrow;
-    }
-  }
-
-  Future<OrderStatusChangeResponse> changeOrderStatus(String orderId, String status, String remarks) async {
+  Future<OrderStatusChangeResponse> changeOrderStatus(
+      String orderId, String status, String remarks) async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
       final Map<String, dynamic> requestData = {
@@ -209,30 +226,34 @@ class CanteenServiceManager {
       rethrow;
     }
   }
+Future<List<OrderListManager>> getOrderListManager() async {
+  try {
+    final String? authToken = await AuthenticationService.getAuthToken();
 
-  Future<List<OrderListManager>> getOrderListManager() async {
-    try {
-      final String? authToken = await AuthenticationService.getAuthToken();
+    final response = await http.get(
+      Uri.parse('$baseUrl/api/mobile/canteen/order/list/'),
+      headers: {
+        'Authorization': 'Token $authToken',
+      },
+    );
 
-      final response = await http.get(
-        Uri.parse('$baseUrl/api/mobile/canteen/order/list/'),
-        headers: {
-          'Authorization': 'Token $authToken',
-        },
-      );
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+        final List<dynamic> ordersData = responseData['data'];
 
-      if (response.statusCode == 200) {
-        final List<dynamic> responseData = json.decode(response.body)['data'];
-        return responseData.map((data) => OrderListManager.fromJson(data)).toList();
-      } else {
-        debugPrint('Error fetching order list: ${response.statusCode}');
-        throw Exception('Failed to fetch order list');
-      }
-    } catch (e) {
-      debugPrint('Error fetching order list: $e');
-      rethrow;
+        return ordersData.map((data) => OrderListManager.fromJson(data)).toList();
+
+
+    } else {
+      debugPrint('Error fetching order list: ${response.statusCode}');
+      throw Exception('Failed to fetch order list');
     }
+  } catch (e) {
+    debugPrint('Error fetching order list: $e');
+    rethrow; // Rethrow the exception to propagate it further
   }
+}
+
 
   Future<OrderDetailManager> getOrderDetailManager(String orderId) async {
     try {
@@ -246,8 +267,13 @@ class CanteenServiceManager {
       );
 
       if (response.statusCode == 200) {
-        final responseData = json.decode(response.body)['data'];
-        return OrderDetailManager.fromJson(responseData);
+        final responseData = json.decode(response.body);
+        if (responseData['result'] == true) {
+          final orderData = responseData['data'];
+          return OrderDetailManager.fromJson(orderData);
+        } else {
+          throw Exception(responseData['msg']);
+        }
       } else {
         debugPrint('Error fetching order detail: ${response.statusCode}');
         throw Exception('Failed to fetch order detail');

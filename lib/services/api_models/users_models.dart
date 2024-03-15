@@ -1,11 +1,10 @@
-
-
-
 class CanteenItemStudent {
   final int id;
   final String name;
-  final int price;
+  final double price;
   final int quantity;
+  final String category;
+  final String imageUrl;
   final bool isTodaysSpecial;
 
   CanteenItemStudent({
@@ -13,28 +12,33 @@ class CanteenItemStudent {
     required this.name,
     required this.price,
     required this.quantity,
+    required this.category,
+    required this.imageUrl,
     required this.isTodaysSpecial,
   });
 
   factory CanteenItemStudent.fromJson(Map<String, dynamic> json) {
     return CanteenItemStudent(
-      id: json['id'],
-      name: json['name'],
-      price: json['price'],
-      quantity: json['quantity'],
-      isTodaysSpecial: json['is_todays_special'],
+      id: json['id'] as int? ?? 0, // Default value: 0
+      name: json['name'] as String? ?? '', // Default value: ''
+      price: json['price'] as double? ?? 0, // Default value: 0
+      quantity: json['quantity'] as int? ?? 0, // Default value: 0
+      category: json['category'] as String? ?? '', // Default value: ''
+      imageUrl: json['image_url'] as String? ?? 'https://res.cloudinary.com/do6mh6z0s/image/upload/v1707292467/canteen_management/t5jrdentco4iztmlf67t.jpg', // Default value: ''
+      isTodaysSpecial: json['is_todays_special'] as bool? ?? false, // Default value: false
     );
   }
 }
 
+
 class CartItem {
-  final int itemId; 
+  final int itemId;
   final String itemName;
-  final int itemPrice;
+  final double itemPrice;
   int quantity;
 
   CartItem({
-    required this.itemId, 
+    required this.itemId,
     required this.itemName,
     required this.itemPrice,
     required this.quantity,
@@ -42,26 +46,21 @@ class CartItem {
 
   factory CartItem.fromJson(Map<String, dynamic> json) {
     return CartItem(
-      itemId: json['itemId'], 
-      itemName: json['itemName'],
-      itemPrice: json['itemPrice'],
-      quantity: json['quantity']
-    );
+        itemId: json['itemId'],
+        itemName: json['itemName'],
+        itemPrice: json['itemPrice'],
+        quantity: json['quantity']);
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'itemId': itemId, 
+      'itemId': itemId,
       'itemName': itemName,
       'itemPrice': itemPrice,
       'quantity': quantity,
     };
   }
 }
-
-
-
-
 
 class Order {
   final int id;
@@ -110,10 +109,12 @@ class OrderDetail {
       totalQuantity: json['total_quantity'],
       deliveryTime: json['delivery_time'],
       status: json['status'],
-      items: List<OrderItem>.from(json['items'].map((item) => OrderItem.fromJson(item))),
+      items: List<OrderItem>.from(
+          json['items'].map((item) => OrderItem.fromJson(item))),
     );
   }
 }
+
 
 class OrderItem {
   final int id;
@@ -143,8 +144,3 @@ class OrderItem {
     );
   }
 }
-
-
-
-
-

@@ -3,10 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class AuthenticationService {
-  final String baseUrl = 'http://127.0.0.1:8000';
-  // final String baseUrl = 'https://fn5bbnp1-8000.inc1.devtunnels.ms';
+  // final String baseUrl = 'http://127.0.0.1:8000';
+  final String baseUrl = 'http://192.168.1.4:8000';
 
   static const String authTokenKey = 'authToken';
 
@@ -57,6 +56,8 @@ class AuthenticationService {
         final String username = responseData['data']['username'];
         final String name = responseData['data']['name'];
         final String userType = responseData['data']['type'];
+
+        debugPrint(authToken);
 
         // Save the auth token
         await saveUserDetails(authToken, username, name, userType);

@@ -3,7 +3,7 @@
 class CanteenItemManager {
   final int id;
   final String name;
-  final int price;
+  final double price;
   final int quantity;
   final bool isApproved;
   final String approvedBy;
@@ -80,42 +80,27 @@ class FoodDetailManager {
 
 
 
-class OrderStatusDropdown {
-  final String value;
-  final String text;
 
-  OrderStatusDropdown({
-    required this.value,
-    required this.text,
-  });
 
-  factory OrderStatusDropdown.fromJson(Map<String, dynamic> json) {
-    return OrderStatusDropdown(
-      value: json['value'],
-      text: json['text'],
-    );
-  }
-}
+// class OrderStatusChangeResponse {
+//   final bool result;
+//   final String msg;
+//   final dynamic data;
 
-class OrderStatusChangeResponse {
-  final bool result;
-  final String msg;
-  final dynamic data;
+//   OrderStatusChangeResponse({
+//     required this.result,
+//     required this.msg,
+//     required this.data,
+//   });
 
-  OrderStatusChangeResponse({
-    required this.result,
-    required this.msg,
-    required this.data,
-  });
-
-  factory OrderStatusChangeResponse.fromJson(Map<String, dynamic> json) {
-    return OrderStatusChangeResponse(
-      result: json['result'],
-      msg: json['msg'],
-      data: json['data'],
-    );
-  }
-}
+//   factory OrderStatusChangeResponse.fromJson(Map<String, dynamic> json) {
+//     return OrderStatusChangeResponse(
+//       result: json['result'],
+//       msg: json['msg'],
+//       data: json['data'],
+//     );
+//   }
+// }
 
 class OrderListManager {
   final int id;

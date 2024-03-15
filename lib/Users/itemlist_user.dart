@@ -39,33 +39,40 @@ class _ItemScreenUsersState extends State<ItemScreenUsers> {
     );
   }
 
-  Widget _buildListItem() {
-    List<CanteenItemStudent> approvedItems =
-        items.where((item) => item.quantity > 0).toList();
+Widget _buildListItem() {
+  List<CanteenItemStudent> approvedItems =
+      items.where((item) => item.quantity > 0).toList();
 
-    return ListView.builder(
-      itemCount: approvedItems.length,
-      itemBuilder: (context, index) {
-        CanteenItemStudent item = approvedItems[index];
-        return ListTile(
-          title: Text(item.name),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Price: ${item.price}'),
-              Text('Quantity available: ${item.quantity}'),
-            ],
-          ),
-          trailing: ElevatedButton(
-            onPressed:  () {
-              _addToCart(item, context);
-            },
-            child: const Text('Add to Cart'),
-          ),
-        );
-      },
-    );
-  }
+  return ListView.builder(
+    itemCount: approvedItems.length,
+    itemBuilder: (context, index) {
+      CanteenItemStudent item = approvedItems[index];
+      return ListTile(
+        title: Text(item.name),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Price: ${item.price}'),
+            Text('Quantity available: ${item.quantity}'),
+            Text('Category: ${item.category}'), // Display category
+          ],
+        ),
+        leading: CircleAvatar(
+          backgroundImage: NetworkImage(item.imageUrl), // Display image
+        ),
+        trailing: ElevatedButton(
+          onPressed:  () {
+            _addToCart(item, context);
+          },
+          child: const Text('Add to Cart'),
+        ),
+      );
+    },
+  );
+}
+
+
+
 
   void _addToCart(CanteenItemStudent item, BuildContext context) async {
     List<CartItem> cartItems = await CartService.loadCartItems();
@@ -82,10 +89,8 @@ class _ItemScreenUsersState extends State<ItemScreenUsers> {
       ));
     }
 
-    // Save the updated cart items
     await CartService.updateCartItems(cartItems);
 
-    // Show a popup indicating that the item has been added to the cart
     showDialog(
       // ignore: use_build_context_synchronously
       context: context,
@@ -106,3 +111,4 @@ class _ItemScreenUsersState extends State<ItemScreenUsers> {
     );
   }
 }
+

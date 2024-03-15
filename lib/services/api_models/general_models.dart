@@ -15,6 +15,7 @@ class FoodCategory {
   }
 }
 
+
 class Course {
   final String value;
   final String text;
@@ -35,3 +36,19 @@ class Course {
 
 
 
+class OrderStatusDropdown {
+  final String value;
+  final String text;
+
+  OrderStatusDropdown({
+    required this.value,
+    required this.text,
+  });
+
+  factory OrderStatusDropdown.fromJson(Map<String, dynamic> json) {
+    return OrderStatusDropdown(
+      value: json['value'],
+      text: json['text'],
+    );
+  }
+}
