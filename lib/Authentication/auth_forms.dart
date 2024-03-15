@@ -5,6 +5,8 @@ import 'package:canteen_app/Manager/manager_screen.dart';
 import 'package:canteen_app/Inspectors/inspector_screen.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:canteen_app/Services/widgets/common_widgets.dart';
+import 'package:canteen_app/Services/api/genaral_api_service.dart';
+import 'package:canteen_app/Services/api_models/general_model.dart';
 import 'package:canteen_app/Services/api/authentication_service.dart';
 
 class LoginForm extends StatefulWidget {
@@ -96,7 +98,6 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 }
-
 class SignupForm extends StatelessWidget {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   final TextEditingController emailController = TextEditingController();
@@ -110,46 +111,62 @@ class SignupForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilder(
       key: _formKey,
-      child: Column(
-        children: [
-          CommonTextField(
-            controller: emailController,
-            labelText: 'username',
-          ),
-          const SizedBox(height: 16.0),
-          CommonTextField(
-            controller: passwordController,
-            labelText: 'Password',
-            obscureText: true,
-          ),
-          const SizedBox(height: 16.0),
-          FormBuilderDropdown(
-            name: 'department',
-            decoration: const InputDecoration(labelText: 'Department'),
-            items: ['Department A', 'Department B', 'Department C']
-                .map((department) => DropdownMenuItem(
-                      value: department,
-                      child: Text(department),
-                    ))
-                .toList(),
-          ),
-          const SizedBox(height: 16.0),
-          CommonTextField(
-            controller: admissionNumberController,
-            labelText: 'Admission Number',
-          ),
-          const SizedBox(height: 20),
-          CommonButton(
-            onPressed: () {
-              if (_formKey.currentState?.saveAndValidate() ?? false) {
-                var formData = _formKey.currentState?.value;
-                debugPrint('$formData');
-              }
-            },
-            text: 'Sign Up',
-          ),
-        ],
+      child: FutureBuilder<List<Course>>(
+        future: GenralService().getCourses(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            List<Course> courses = snapshot.data ?? [];
+            List<String> departmentNames = courses.map((course) => course.value).toList();
+
+            return Column(
+              children: [
+                CommonTextField(
+                  controller: emailController,
+                  labelText: 'username',
+                ),
+                const SizedBox(height: 16.0),
+                CommonTextField(
+                  controller: passwordController,
+                  labelText: 'Password',
+                  obscureText: true,
+                ),
+                const SizedBox(height: 16.0),
+                FormBuilderDropdown(
+                  name: 'department',
+                  decoration: const InputDecoration(labelText: 'Department'),
+                  items: departmentNames
+                      .map((department) => DropdownMenuItem(
+                            value: department,
+                            child: Text(department),
+                          ))
+                      .toList(),
+                ),
+                // const SizedBox(height: 16.0),
+                // CommonTextField(
+                //   controller: admissionNumberController,
+                //   labelText: 'Admission Number',
+                // ),
+                const SizedBox(height: 20),
+                CommonButton(
+                  onPressed: () {
+                    if (_formKey.currentState?.saveAndValidate() ?? false) {
+                      var formData = _formKey.currentState?.value;
+                      debugPrint('$formData');
+                    }
+                  },
+                  text: 'Sign Up',
+                ),
+              ],
+            );
+          }
+        },
       ),
     );
   }
+
+
 }
