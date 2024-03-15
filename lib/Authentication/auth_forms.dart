@@ -113,7 +113,7 @@ class SignupForm extends StatelessWidget {
         children: [
           CommonTextField(
             controller: emailController,
-            labelText: 'Email',
+            labelText: 'username',
           ),
           const SizedBox(height: 16.0),
           CommonTextField(

@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationService {
-  // final String baseUrl = 'http://127.0.0.1:8000';
-  final String baseUrl = 'http://192.168.1.4:8000';
+  final String baseUrl = 'http://127.0.0.1:8000';
+  // final String baseUrl = 'http://192.168.1.4:8000';
 
   static const String authTokenKey = 'authToken';
 
