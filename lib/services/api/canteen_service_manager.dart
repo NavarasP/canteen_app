@@ -6,8 +6,8 @@ import 'package:canteen_app/Services/api_models/manager_model.dart';
 import 'package:canteen_app/Services/api/authentication_service.dart';
 
 class CanteenServiceManager {
-  final String baseUrl = 'http://127.0.0.1:8000';
-  // final String baseUrl = 'http://192.168.1.4:8000';
+  // final String baseUrl = 'http://127.0.0.1:8000';
+  final String baseUrl = 'http://192.168.1.4:8000';
 
   Future<List<CanteenItemManager>> getFoodListManager() async {
     try {
@@ -43,7 +43,7 @@ class CanteenServiceManager {
     // Prepare the multipart request
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('$baseUrl/api/mobile/canteen/food/create'),
+      Uri.parse('$baseUrl/api/mobile/canteen/food/create/'),
     );
 
     request.headers['Authorization'] = 'Token $authToken';
@@ -52,10 +52,9 @@ class CanteenServiceManager {
     request.fields['name'] = foodData['name'];
     request.fields['price'] = foodData['price'];
     request.fields['quantity'] = foodData['quantity'];
-
     request.fields['category_id'] = foodData['category_id'];
 
-    // Add image file
+    // // Add image file
     request.files.add(
       await http.MultipartFile.fromPath(
         'image',

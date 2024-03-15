@@ -4,19 +4,21 @@ import 'package:canteen_app/Services/api_models/users_models.dart';
 import 'package:canteen_app/Services/api/canteen_service_user.dart';
 
 class ItemScreenUsers extends StatefulWidget {
-  const ItemScreenUsers({super.key});
+  const ItemScreenUsers({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _ItemScreenUsersState createState() => _ItemScreenUsersState();
 }
 
-class _ItemScreenUsersState extends State<ItemScreenUsers> {
+class _ItemScreenUsersState extends State<ItemScreenUsers>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   List<CanteenItemStudent> items = [];
 
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 5, vsync: this);
     _loadItems();
   }
 
@@ -35,44 +37,63 @@ class _ItemScreenUsersState extends State<ItemScreenUsers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildListItem(),
+      appBar: AppBar(
+        title: TabBar(
+          controller: _tabController,
+          tabs: const [
+            Tab(text: 'Vegetarian'),
+            Tab(text: 'Non-Vegetarian'),
+            Tab(text: 'Dessert'),
+            Tab(text: 'Snacks'),
+            Tab(text: 'Drinks'),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          _buildCategoryList('Vegetarian'),
+          _buildCategoryList('Non-Vegetarian'),
+          _buildCategoryList('Dessert'),
+          _buildCategoryList('Snacks'),
+          _buildCategoryList('Drinks'),
+        ],
+      ),
     );
   }
 
-Widget _buildListItem() {
-  List<CanteenItemStudent> approvedItems =
-      items.where((item) => item.quantity > 0).toList();
+  Widget _buildCategoryList(String category) {
+    List<CanteenItemStudent> categoryItems = items
+        .where((item) => item.category.toLowerCase() == category.toLowerCase())
+        .toList();
 
-  return ListView.builder(
-    itemCount: approvedItems.length,
-    itemBuilder: (context, index) {
-      CanteenItemStudent item = approvedItems[index];
-      return ListTile(
-        title: Text(item.name),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Price: ${item.price}'),
-            Text('Quantity available: ${item.quantity}'),
-            Text('Category: ${item.category}'), // Display category
-          ],
-        ),
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(item.imageUrl), // Display image
-        ),
-        trailing: ElevatedButton(
-          onPressed:  () {
-            _addToCart(item, context);
-          },
-          child: const Text('Add to Cart'),
-        ),
-      );
-    },
-  );
-}
-
-
-
+    return ListView.builder(
+      itemCount: categoryItems.length,
+      itemBuilder: (context, index) {
+        CanteenItemStudent item = categoryItems[index];
+        return ListTile(
+          title: Text(item.name),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Price: ${item.price}'),
+              Text('Quantity available: ${item.quantity}'),
+              Text('Category: ${item.category}'),
+            ],
+          ),
+          leading: CircleAvatar(
+            backgroundImage: NetworkImage(item.imageUrl),
+          ),
+          trailing: ElevatedButton(
+            onPressed: () {
+              _addToCart(item, context);
+            },
+            child: const Text('Add to Cart'),
+          ),
+        );
+      },
+    );
+  }
 
   void _addToCart(CanteenItemStudent item, BuildContext context) async {
     List<CartItem> cartItems = await CartService.loadCartItems();
@@ -92,7 +113,6 @@ Widget _buildListItem() {
     await CartService.updateCartItems(cartItems);
 
     showDialog(
-      // ignore: use_build_context_synchronously
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -110,5 +130,10 @@ Widget _buildListItem() {
       },
     );
   }
-}
 
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+}

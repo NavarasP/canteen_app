@@ -5,8 +5,8 @@ import 'package:canteen_app/Services/api_models/users_models.dart';
 import 'package:canteen_app/Services/api/authentication_service.dart';
 
 class CanteenServiceUser {
-  final String baseUrl = 'http://127.0.0.1:8000';
-  // final String baseUrl = 'http://192.168.1.4:8000';
+  // final String baseUrl = 'http://127.0.0.1:8000';
+  final String baseUrl = 'http://192.168.1.4:8000';
 
 
   Future<List<CanteenItemStudent>> getFoodListUser() async {

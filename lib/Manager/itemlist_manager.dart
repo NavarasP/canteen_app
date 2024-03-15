@@ -52,9 +52,9 @@ class _ItemScreenState extends State<ItemScreenManager> {
   }
 
   Future<void> _createNewItem(
-      Map<String, dynamic> foodData, File? image) async {
+      Map<String, dynamic> foodData,  image) async {
     try {
-      await CanteenServiceManager().createFood(foodData, image!);
+      await CanteenServiceManager().createFood(foodData, image);
       // Refresh the item list after creating a new item
       _loadItems();
     } catch (e) {
@@ -132,10 +132,11 @@ class _ItemScreenState extends State<ItemScreenManager> {
                   'name': nameController.text,
                   'price': priceController.text,
                   'quantity': quantityController.text,
-                  'category_id': selectedCategory?.id, // Pass the category ID
-                  'image': image, // Pass the image file
+                  'category_id': selectedCategory?.id.toString(), // Pass the category ID
+                  // 'image': image, // Pass the image file
                 };
-                // debugPrint(selectedCategory.id as int? );
+                debugPrint(foodData.toString());
+                // debugPrint(image);
 
                 // Call the API to create the new item
                 _createNewItem(foodData, image);
