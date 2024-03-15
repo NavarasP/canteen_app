@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:canteen_app/Users/user_screen.dart';
+import 'package:canteen_app/Agent/agent_screen.dart';
 import 'package:canteen_app/Manager/manager_screen.dart';
 import 'package:canteen_app/Inspectors/inspector_screen.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -46,14 +47,17 @@ class _LoginFormState extends State<LoginForm> {
         case 'MANAGER':
           // ignore: use_build_context_synchronously
           _navigateToReplacement(context, const CanteenTeamScreen());
+          
+        case 'DELIVERY':
+          _navigateToReplacement(context, const AgentScreen());
           break;
+
         default:
           debugPrint('Unknown user role: $userRole');
           break;
       }
     }).catchError((error) {
       debugPrint('Authentication failed: $error');
-      // Handle errors (display error message to the user)
     }).whenComplete(() {
       setState(() {
         isLoading = false;

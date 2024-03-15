@@ -197,12 +197,12 @@ class CanteenServiceManager {
   }
 
  Future<String> changeOrderStatus(
-      String orderId, String status, String remarks) async {
+      String orderId, String status) async {
     try {
       final String? authToken = await AuthenticationService.getAuthToken();
       final Map<String, dynamic> requestData = {
         'status': status,
-        'remarks': remarks,
+        'remarks': "Good",
       };
 
       final response = await http.post(

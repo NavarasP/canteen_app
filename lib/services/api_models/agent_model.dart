@@ -1,13 +1,13 @@
-class OrderItem {
+class OrderItemAgent {
   final int id;
   final String orderId;
-  final int totalPrice;
+  final double totalPrice;
   final String status;
   final String studentName;
   final String studentDepartment;
   final String studentMobile;
 
-  OrderItem({
+  OrderItemAgent({
     required this.id,
     required this.orderId,
     required this.totalPrice,
@@ -17,8 +17,8 @@ class OrderItem {
     required this.studentMobile,
   });
 
-  factory OrderItem.fromJson(Map<String, dynamic> json) {
-    return OrderItem(
+  factory OrderItemAgent.fromJson(Map<String, dynamic> json) {
+    return OrderItemAgent(
       id: json['id'],
       orderId: json['order_id'],
       totalPrice: json['total_price'],

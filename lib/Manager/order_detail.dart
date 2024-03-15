@@ -4,14 +4,12 @@ import 'package:canteen_app/Services/api_models/manager_model.dart';
 import 'package:canteen_app/Services/api_models/general_model.dart';
 import 'package:canteen_app/Services/api/canteen_service_manager.dart';
 
-
 class OrderDetailManagerPage extends StatefulWidget {
   final String orderId;
 
-  const OrderDetailManagerPage({required this.orderId, super.key});
+  const OrderDetailManagerPage({required this.orderId, Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _OrderDetailManagerPageState createState() => _OrderDetailManagerPageState();
 }
 
@@ -34,6 +32,17 @@ class _OrderDetailManagerPageState extends State<OrderDetailManagerPage> {
     return GenralService().getOrderStatusDropdown();
   }
 
+  Future<void> changeOrderStatus(String orderId, String status) async {
+    try {
+      await CanteenServiceManager().changeOrderStatus(orderId, status);
+      setState(() {
+        _orderDetailFuture = getOrderDetail(orderId);
+      });
+    } catch (e) {
+      print('Error changing order status: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,8 +58,7 @@ class _OrderDetailManagerPageState extends State<OrderDetailManagerPage> {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             final orderDetail = snapshot.data![0] as OrderDetailManager;
-            final orderStatusDropdown =
-                snapshot.data![1] as List<OrderStatusDropdown>;
+            final orderStatusDropdown = snapshot.data![1] as List<OrderStatusDropdown>;
             return SingleChildScrollView(
               padding: EdgeInsets.all(16.0),
               child: Column(
@@ -77,25 +85,28 @@ class _OrderDetailManagerPageState extends State<OrderDetailManagerPage> {
                   ),
                   const SizedBox(height: 16),
                   const Text('Change Order Status:'),
-                  // SizedBox(
-                  //   width: double.infinity,
-                  //   child: DropdownButtonFormField<String>(
-                  //     value: orderDetail.status,
-                  //     onChanged: (value) {
-                  //       // Implement logic to update order status
-                  //     },
-                  //     items: orderStatusDropdown
-                  //           .map<DropdownMenuItem<String>>((dropdownItem) {
-                  //             return DropdownMenuItem<String>(
-                  //               value: dropdownItem.value,
-                  //               child: Text(dropdownItem.value),
-                  //             );
-                  //           })
-                  //           .toSet() // Convert to a set to ensure uniqueness
-                  //           .toList(), // Convert back to a list
+                  Wrap(
+                          spacing: 8.0,
+                          children: [
+                            if (orderDetail.status == 'Order Placed')
+                              ElevatedButton(
+                                onPressed: () => changeOrderStatus(widget.orderId, 'APPROVED'),
+                                child: Text('Approve'),
+                              ),
+                            if (orderDetail.status == 'Order Approved')
+                              ElevatedButton(
+                                onPressed: () => changeOrderStatus(widget.orderId, 'READY'),
+                                child: Text('Order Ready'),
+                              ),
+                            // if (orderDetail.status == 'Order Ready To be Delivered')
+                            //   ElevatedButton(
+                            //     onPressed: () => changeOrderStatus(widget.orderId, 'READY'),
+                            //     child: Text('Ready'),
+                            //   ),
+                          ],
+                        ),
 
-                  //   ),
-                  // ),
+
                 ],
               ),
             );
