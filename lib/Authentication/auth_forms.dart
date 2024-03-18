@@ -130,6 +130,11 @@ class SignupForm extends StatelessWidget {
                 ),
                 const SizedBox(height: 16.0),
                 CommonTextField(
+                  controller: nameController,
+                  labelText: 'Name',
+                ),
+                const SizedBox(height: 16.0),
+                CommonTextField(
                   controller: passwordController,
                   labelText: 'Password',
                   obscureText: true,
