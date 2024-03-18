@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:canteen_app/Users/user_screen.dart';
 import 'package:canteen_app/Agent/agent_screen.dart';
 import 'package:canteen_app/Manager/manager_screen.dart';
+import 'package:canteen_app/Authentication/auth_screen.dart';
 import 'package:canteen_app/Inspectors/inspector_screen.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:canteen_app/Services/widgets/common_widgets.dart';
@@ -170,7 +171,7 @@ class SignupForm extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 CommonButton(
-                  onPressed: () {
+                  onPressed: () async {
                     // Validate password and confirm password match
                     if (passwordController.text != confirmPasswordController.text) {
                       // Show error message if passwords don't match
@@ -206,13 +207,25 @@ class SignupForm extends StatelessWidget {
                     }
 
                     // Sign up with provided credentials
-                    AuthenticationService().signUp(
+                    await AuthenticationService().signUp(
                       usernameController.text,
                       nameController.text,
                       passwordController.text,
                       confirmPasswordController.text,
                       departmentController.text,
                     );
+                    try{
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    } catch (error) {
+                      debugPrint('Error signing up: $error');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Error signing up: $error'),
+                        ),
+                      );
+                    }
                   },
                   text: 'Sign Up',
                 ),
