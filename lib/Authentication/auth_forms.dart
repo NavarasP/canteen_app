@@ -98,6 +98,7 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 }
+
 class SignupForm extends StatelessWidget {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -106,6 +107,14 @@ class SignupForm extends StatelessWidget {
   final TextEditingController departmentController = TextEditingController();
 
   SignupForm({Key? key}) : super(key: key);
+
+  bool _validatePassword(String password) {
+    // Define password validation criteria here
+    // For example, check length and for common or entirely numeric passwords
+    return password.length >= 8 &&
+        !password.contains('common') &&
+        !RegExp(r'^[0-9]+$').hasMatch(password);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,12 +182,35 @@ class SignupForm extends StatelessWidget {
                       return;
                     }
                     
+                    // Validate password strength
+                    if (!_validatePassword(passwordController.text)) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Password Validation Error'),
+                            content: Text(
+                                'Password must be at least 8 characters long and not too common or entirely numeric.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      return;
+                    }
+
                     // Sign up with provided credentials
                     AuthenticationService().signUp(
                       usernameController.text,
                       nameController.text,
                       passwordController.text,
-                    confirmPasswordController.text,
+                      confirmPasswordController.text,
                       departmentController.text,
                     );
                   },
@@ -192,7 +224,3 @@ class SignupForm extends StatelessWidget {
     );
   }
 }
-
-
-
-
