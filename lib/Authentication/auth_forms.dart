@@ -18,7 +18,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   bool isLoading = false;
@@ -28,7 +28,7 @@ class _LoginFormState extends State<LoginForm> {
       isLoading = true;
     });
 
-    String email = emailController.text;
+    String email = usernameController.text;
     String password = passwordController.text;
 
     AuthenticationService().signIn(email, password).then((_) async {
@@ -80,7 +80,7 @@ class _LoginFormState extends State<LoginForm> {
     return Column(
       children: [
         CommonTextField(
-          controller: emailController,
+          controller: usernameController,
           labelText: 'Username or Phone Number',
         ),
         const SizedBox(height: 16.0),
@@ -99,7 +99,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 }
 class SignupForm extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -125,7 +125,7 @@ class SignupForm extends StatelessWidget {
             return Column(
               children: [
                 CommonTextField(
-                  controller: emailController,
+                  controller: usernameController,
                   labelText: 'Username',
                 ),
                 const SizedBox(height: 16.0),
@@ -170,11 +170,11 @@ class SignupForm extends StatelessWidget {
                     
                     // Sign up with provided credentials
                     AuthenticationService().signUp(
-                      emailController.text,
-                      passwordController.text,
+                      usernameController.text,
                       nameController.text,
+                      passwordController.text,
+                    confirmPasswordController.text,
                       departmentController.text,
-                      confirmPasswordController.text,
                     );
                   },
                   text: 'Sign Up',
