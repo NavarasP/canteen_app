@@ -99,39 +99,45 @@ class _LoginFormState extends State<LoginForm> {
   }
 }
 class SignupForm extends StatelessWidget {
-  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController admissionNumberController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController departmentController = TextEditingController();
 
-  SignupForm({super.key});
+  SignupForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
-      key: _formKey,
       child: FutureBuilder<List<Course>>(
         future: GenralService().getCourses(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
             List<Course> courses = snapshot.data ?? [];
-            List<String> departmentNames = courses.map((course) => course.value).toList();
+            List<String> departmentNames =
+                courses.map((course) => course.value).toList();
 
             return Column(
               children: [
                 CommonTextField(
                   controller: emailController,
-                  labelText: 'username',
+                  labelText: 'Username',
                 ),
                 const SizedBox(height: 16.0),
                 CommonTextField(
                   controller: passwordController,
                   labelText: 'Password',
+                  obscureText: true,
+                ),
+                const SizedBox(height: 16.0),
+                CommonTextField(
+                  controller: confirmPasswordController,
+                  labelText: 'Confirm Password',
                   obscureText: true,
                 ),
                 const SizedBox(height: 16.0),
@@ -144,19 +150,32 @@ class SignupForm extends StatelessWidget {
                             child: Text(department),
                           ))
                       .toList(),
+                  onChanged: (String? value) {
+                    departmentController.text = value ?? '';
+                  },
                 ),
-                // const SizedBox(height: 16.0),
-                // CommonTextField(
-                //   controller: admissionNumberController,
-                //   labelText: 'Admission Number',
-                // ),
                 const SizedBox(height: 20),
                 CommonButton(
                   onPressed: () {
-                    if (_formKey.currentState?.saveAndValidate() ?? false) {
-                      var formData = _formKey.currentState?.value;
-                      debugPrint('$formData');
+                    // Validate password and confirm password match
+                    if (passwordController.text != confirmPasswordController.text) {
+                      // Show error message if passwords don't match
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Passwords do not match.'),
+                        ),
+                      );
+                      return;
                     }
+                    
+                    // Sign up with provided credentials
+                    AuthenticationService().signUp(
+                      emailController.text,
+                      passwordController.text,
+                      nameController.text,
+                      departmentController.text,
+                      confirmPasswordController.text,
+                    );
                   },
                   text: 'Sign Up',
                 ),
@@ -167,6 +186,8 @@ class SignupForm extends StatelessWidget {
       ),
     );
   }
-
-
 }
+
+
+
+

@@ -15,12 +15,12 @@ class OrderDetailManagerPage extends StatefulWidget {
 
 class _OrderDetailManagerPageState extends State<OrderDetailManagerPage> {
   late Future<OrderDetailManager> _orderDetailFuture;
-  late Future<List<OrderStatusDropdown>> _orderStatusDropdownFuture;
 
   @override
   void initState() {
     super.initState();
     _orderDetailFuture = getOrderDetail(widget.orderId);
+
   }
 
   Future<OrderDetailManager> getOrderDetail(String orderId) async {
@@ -47,7 +47,7 @@ class _OrderDetailManagerPageState extends State<OrderDetailManagerPage> {
         title: Text('Order Details - ${widget.orderId}'),
       ),
       body: FutureBuilder(
-        future: Future.wait([_orderDetailFuture, _orderStatusDropdownFuture]),
+        future: Future.wait([_orderDetailFuture]),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
